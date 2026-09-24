@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E Xchange | Give unused parts a second life</title>
+<meta name="description" content="E Xchange is a hackathon prototype: a smart exchange marketplace that connects people who need used electronic and mechanical components with people who have them.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230B7A54'/%3E%3Cpath d='M8 12h14m-4-4 4 4-4 4M24 20H10m4-4-4 4 4 4' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --mist: #f3f8f5;
+    --ink: #10201b;
+    --muted: #4a5a54;
+    --line: #dbe6e0;
+    --green: #0b7a54;
+    --green-strong: #096646;
+    --green-soft: #e2f3ea;
+    --blue: #1f5fd6;
+    --blue-soft: #e3edfc;
+    --deep: #0b3d2e;
+    --radius: 24px;
+    --radius-sm: 16px;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.1; letter-spacing: -0.02em; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; }
+  ul, ol { margin: 0; padding: 0; list-style: none; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+
+  .wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+  .section { padding-block: clamp(4rem, 9vw, 7rem); scroll-margin-top: 64px; }
+  .section--mist { background: var(--mist); }
+  .lead { color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.2rem); max-width: 60ch; }
+  .section-head { display: grid; gap: 1rem; margin-bottom: clamp(2rem, 5vw, 3.5rem); max-width: 760px; }
+  .section-head h2 { font-size: clamp(1.9rem, 4.6vw, 3.1rem); }
+
+  .i { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    padding: .85rem 1.5rem; border-radius: 999px; border: 2px solid transparent;
+    font-weight: 600; font-size: 1rem; text-decoration: none; cursor: pointer;
+    transition: background-color .2s, color .2s, border-color .2s, transform .2s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--green); color: #fff; }
+  .btn-primary:hover { background: var(--green-strong); }
+  .btn-ghost { background: #fff; color: var(--ink); border-color: var(--line); }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn-light { background: #fff; color: var(--deep); }
+  .btn-light:hover { background: var(--green-soft); }
+
+  /* Header */
+  .site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 64px; }
+  .brand { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; }
+  .brand-mark { width: 32px; height: 32px; }
+  .nav-links { display: none; gap: 1.75rem; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: .98rem; }
+  .nav-links a:hover { color: var(--ink); }
+  .bar-end { display: flex; align-items: center; gap: .75rem; }
+  .badge { font-size: .8rem; font-weight: 600; color: var(--blue); background: var(--blue-soft); padding: .3rem .75rem; border-radius: 999px; white-space: nowrap; }
+  .menu-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+  .menu-btn .i-close { display: none; }
+  .menu-btn[aria-expanded="true"] .i-open { display: none; }
+  .menu-btn[aria-expanded="true"] .i-close { display: block; }
+  .mobile-nav { display: none; border-top: 1px solid var(--line); background: #fff; }
+  .mobile-nav.open { display: block; }
+  .mobile-nav a { display: block; padding: .9rem 0; text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--line); }
+  .mobile-nav a:last-child { border-bottom: 0; }
+  @media (min-width: 900px) {
+    .nav-links { display: flex; }
+    .menu-btn, .mobile-nav { display: none !important; }
+  }
+  @media (max-width: 420px) { .badge { display: none; } }
+
+  /* Hero */
+  .hero { padding-block: clamp(2.5rem, 7vw, 6rem) clamp(3rem, 8vw, 6rem); }
+  .hero-grid { display: grid; gap: 3rem; align-items: center; }
+  .hero h1 { font-size: clamp(2.7rem, 8vw, 5.2rem); font-weight: 800; }
+  .hero .lead { margin-top: 1.5rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+  .hero-note { margin-top: 1.5rem; font-size: .92rem; color: var(--muted); max-width: 46ch; }
+  .hero-visual { background: var(--mist); border: 1px solid var(--line); border-radius: 32px; padding: clamp(.75rem, 3vw, 1.5rem); }
+  .hero-visual svg { display: block; width: 100%; height: auto; }
+  @media (min-width: 960px) { .hero-grid { grid-template-columns: 1.05fr 1fr; gap: 4rem; } }
+
+  /* Cards shared */
+  .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+  .icon-tile { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: var(--green-soft); color: var(--green); }
+  .icon-tile.blue { background: var(--blue-soft); color: var(--blue); }
+
+  /* Problem */
+  .problem-grid { display: grid; gap: 1.25rem; }
+  .problem-grid .card { display: grid; gap: 1rem; align-content: start; }
+  .problem-grid h3 { font-size: 1.35rem; }
+  .problem-grid p { color: var(--muted); }
+  @media (min-width: 720px) { .problem-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Solution */
+  .solution-panel { background: var(--mist); border: 1px solid var(--line); border-radius: 32px; padding: clamp(1.25rem, 4vw, 2.5rem); display: grid; gap: 1rem; }
+  .solution-item { display: grid; grid-template-columns: auto 1fr; gap: 1.1rem; align-items: start; background: #fff; border-radius: var(--radius-sm); padding: 1.25rem; border: 1px solid var(--line); }
+  .solution-item h3 { font-size: 1.2rem; margin-bottom: .3rem; }
+  .solution-item p { color: var(--muted); font-size: 1rem; }
+  @media (min-width: 860px) {
+    .solution-panel { grid-template-columns: repeat(6, 1fr); }
+    .solution-item { grid-column: span 2; }
+    .solution-item:nth-child(1) { grid-column: span 3; }
+    .solution-item:nth-child(2) { grid-column: span 3; }
+  }
+  .section--mist .solution-panel { background: #fff; }
+  .section--mist .solution-item { background: var(--mist); border-color: transparent; }
+
+  /* How it works */
+  .steps { display: grid; gap: 1rem; counter-reset: step; }
+  .step { position: relative; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; display: grid; gap: .75rem; align-content: start; }
+  .step-top { display: flex; align-items: center; justify-content: space-between; }
+  .step-num { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--green); color: #fff; font-family: var(--display); font-weight: 700; font-size: 1.1rem; }
+  .step .i { color: var(--blue); width: 1.75rem; height: 1.75rem; }
+  .step h3 { font-size: 1.4rem; margin-top: .25rem; }
+  .step p { color: var(--muted); font-size: 1rem; }
+  @media (min-width: 680px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) {
+    .steps { grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+    .step:not(:last-child)::after {
+      content: ""; position: absolute; top: 2.25rem; right: -1.25rem; width: 1.25rem; height: 2px; background: var(--green);
+    }
+  }
+  .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  /* Example */
+  .quote { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; font-size: clamp(1.6rem, 4.2vw, 2.6rem); max-width: 22em; margin: 0 0 clamp(2.5rem, 6vw, 4rem); padding-left: 1.25rem; border-left: 4px solid var(--green); }
+  .flow { display: grid; gap: .6rem; }
+  .flow-node { display: flex; align-items: center; gap: 1rem; width: 100%; text-align: left; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .9rem 1rem; cursor: pointer; transition: border-color .25s, background-color .25s, box-shadow .25s; }
+  .flow-node .icon-tile { width: 44px; height: 44px; border-radius: 14px; transition: background-color .25s, color .25s; }
+  .flow-node span.label { font-family: var(--display); font-weight: 700; font-size: 1.15rem; }
+  .flow-node:hover { border-color: var(--green); }
+  .flow-node[aria-current="step"] { border-color: var(--green); background: var(--green-soft); box-shadow: 0 0 0 3px rgba(11,122,84,.15); }
+  .flow-node[aria-current="step"] .icon-tile { background: var(--green); color: #fff; }
+  .flow-node.done .icon-tile { background: var(--green-soft); color: var(--green); }
+  .flow-caption { margin-top: 1.5rem; padding: 1.25rem 1.5rem; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); min-height: 5.5rem; display: grid; gap: .25rem; align-content: center; }
+  .flow-caption strong { font-family: var(--display); font-size: 1.15rem; }
+  .flow-caption span { color: var(--muted); }
+  .flow-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 1.25rem; }
+  .flow-foot p { color: var(--muted); font-size: .92rem; }
+  @media (min-width: 1000px) {
+    .flow { grid-template-columns: repeat(6, 1fr); gap: 1.4rem; }
+    .flow-node { flex-direction: column; align-items: flex-start; padding: 1.1rem; position: relative; }
+    .flow-node:not(:last-child)::after {
+      content: ""; position: absolute; top: 2.05rem; right: -1.4rem; width: 1.4rem; height: 2px; background: var(--line);
+    }
+    .flow-node.done:not(:last-child)::after { background: var(--green); }
+  }
+
+  /* Why it matters */
+  .why-grid { display: grid; gap: 2.5rem; }
+  .why-grid h2 { font-size: clamp(1.9rem, 4.6vw, 3.1rem); }
+  .why-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .why-item { display: grid; grid-template-columns: auto 1fr; gap: 1.1rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .why-item h3 { font-size: 1.25rem; margin-bottom: .25rem; }
+  .why-item p { color: var(--muted); font-size: 1rem; }
+  @media (min-width: 900px) { .why-grid { grid-template-columns: .9fr 1.2fr; gap: 5rem; align-items: start; } .why-intro { position: sticky; top: 100px; display: grid; gap: 1rem; } }
+  .why-intro { display: grid; gap: 1rem; }
+
+  /* Future */
+  .future-grid { display: grid; gap: 1.25rem; }
+  .future-grid .card { display: grid; gap: .9rem; align-content: start; }
+  .future-grid h3 { font-size: 1.3rem; }
+  .future-grid p { color: var(--muted); font-size: 1rem; }
+  @media (min-width: 640px) { .future-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 980px) { .future-grid { grid-template-columns: repeat(3, 1fr); } }
+  .future-note { margin-top: 1.75rem; color: var(--muted); font-size: .95rem; }
+
+  /* Closing */
+  .closing { background: var(--deep); color: #fff; padding-block: clamp(4.5rem, 11vw, 8rem); }
+  .closing h2 { font-size: clamp(2.3rem, 7vw, 4.6rem); font-weight: 800; max-width: 14em; }
+  .closing p { color: #cfe6dc; margin-top: 1.25rem; max-width: 52ch; }
+  .closing .btn { margin-top: 2rem; }
+
+  /* Footer */
+  .site-footer { padding-block: 2rem; border-top: 1px solid var(--line); background: #fff; }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center; color: var(--muted); font-size: .92rem; }
+  .foot p { max-width: 62ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    .js .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><path d="M7.5 7.5h.01"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-shield-alert" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M12 8v4M12 15.5h.01"/></symbol>
+    <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-match" viewBox="0 0 24 24"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V11M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8"/><circle cx="6.5" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18M16 14.5h2"/></symbol>
+    <symbol id="i-exchange" viewBox="0 0 24 24"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9.5 3v4M14.5 3v4M9.5 17v4M14.5 17v4M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M3 16v-4l2-5h14l2 5v4M3 12h18"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V11l6 4v-4l6 4V5h3v16zM3 21h18"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19C5 10 10 5 20 5c0 10-5 15-14 15"/><path d="M5 19c3-5 6-8 10-10"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15 9.5c-.7-1-1.8-1.5-3-1.5s-3 .8-3 2.2c0 3 6 1.5 6 4.3 0 1.4-1.4 2.3-3 2.3-1.3 0-2.4-.5-3.2-1.5"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18 2v4h-4M6 22v-4h4"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="E Xchange home">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="9" fill="#0B7A54"/>
+        <path d="M8 12h14m-4-4 4 4-4 4M24 20H10m4-4-4 4 4 4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      E Xchange
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#how">How it works</a>
+      <a href="#example">Example</a>
+      <a href="#future">Future</a>
+    </nav>
+    <div class="bar-end">
+      <span class="badge">Hackathon prototype</span>
+      <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="mobile-nav" aria-label="Toggle menu">
+        <svg class="i i-open"><use href="#i-menu"/></svg>
+        <svg class="i i-close"><use href="#i-close"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div class="wrap">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#how">How it works</a>
+      <a href="#example">Example</a>
+      <a href="#future">Future</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- 1. Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Give unused parts a second life.</h1>
+        <p class="lead">E Xchange is a smart exchange marketplace for used electronic and mechanical components. It intelligently connects people who need a specific part with people who already have one sitting unused.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#how">How It Works</a>
+          <a class="btn btn-ghost" href="#problem">Explore the Idea</a>
+        </div>
+        <p class="hero-note">This page presents a hackathon prototype and concept. E Xchange is not a live marketplace, and nothing here is a real listing, user, or transaction.</p>
+      </div>
+
+      <div class="hero-visual">
+        <svg id="hero-svg" viewBox="0 0 560 380" role="img" aria-label="Illustration: one user sends a component to another user through E Xchange while payment travels back the other way.">
+          <!-- paths -->
+          <path d="M140 160 Q280 40 420 160" fill="none" stroke="#b7cbc2" stroke-width="2" stroke-dasharray="3 8" stroke-linecap="round"/>
+          <path d="M420 220 Q280 340 140 220" fill="none" stroke="#b7cbc2" stroke-width="2" stroke-dasharray="3 8" stroke-linecap="round"/>
+          <text x="280" y="76" text-anchor="middle" font-family="Figtree, sans-serif" font-size="15" font-weight="600" fill="#4a5a54">Component</text>
+          <text x="280" y="322" text-anchor="middle" font-family="Figtree, sans-serif" font-size="15" font-weight="600" fill="#4a5a54">Payment</text>
+
+          <!-- left user -->
+          <g transform="translate(90 190)">
+            <circle r="48" fill="#e2f3ea" stroke="#0b7a54" stroke-width="2"/>
+            <use href="#i-person" x="-16" y="-16" width="32" height="32" fill="none" stroke="#0b7a54" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            <text y="80" text-anchor="middle" font-family="Figtree, sans-serif" font-size="16" font-weight="700" fill="#10201b">Has a spare part</text>
+          </g>
+
+          <!-- right user -->
+          <g transform="translate(470 190)">
+            <circle r="48" fill="#e3edfc" stroke="#1f5fd6" stroke-width="2"/>
+            <use href="#i-person" x="-16" y="-16" width="32" height="32" fill="none" stroke="#1f5fd6" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            <text y="80" text-anchor="middle" font-family="Figtree, sans-serif" font-size="16" font-weight="700" fill="#10201b">Needs that part</text>
+          </g>
+
+          <!-- hub -->
+          <g transform="translate(280 190)">
+            <rect x="-62" y="-30" width="124" height="60" rx="18" fill="#fff" stroke="#dbe6e0" stroke-width="2"/>
+            <rect x="-50" y="-14" width="28" height="28" rx="8" fill="#0b7a54"/>
+            <use href="#i-exchange" x="-47" y="-11" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="-14" y="5" font-family="'Bricolage Grotesque', sans-serif" font-size="15" font-weight="800" fill="#10201b">E Xchange</text>
+          </g>
+
+          <!-- moving component chip -->
+          <g>
+            <g transform="translate(-24 -19)">
+              <rect width="48" height="38" rx="8" fill="#fff" stroke="#0b7a54" stroke-width="2"/>
+              <rect x="14" y="10" width="20" height="18" rx="3" fill="#e2f3ea" stroke="#0b7a54" stroke-width="1.5"/>
+              <path d="M8 12h4M8 19h4M8 26h4M36 12h4M36 19h4M36 26h4" stroke="#0b7a54" stroke-width="1.5" stroke-linecap="round"/>
+            </g>
+            <animateMotion dur="5s" begin="2.5s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.7;1" path="M140 160 Q280 40 420 160"/>
+            <animate attributeName="opacity" dur="5s" begin="2.5s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.08;0.7;0.85;1"/>
+          </g>
+
+          <!-- moving payment coin -->
+          <g>
+            <circle r="16" fill="#e3edfc" stroke="#1f5fd6" stroke-width="2"/>
+            <circle r="7" fill="none" stroke="#1f5fd6" stroke-width="2"/>
+            <animateMotion dur="5s" begin="0s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.7;1" path="M420 220 Q280 340 140 220"/>
+            <animate attributeName="opacity" dur="5s" begin="0s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.08;0.7;0.85;1"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Problem -->
+  <section class="section section--mist" id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The part you need is probably sitting in someone's drawer.</h2>
+        <p class="lead">Unused motherboards, computer parts, electronics, appliances, and mechanical components pile up in homes and workshops. Meanwhile, someone else may desperately need that exact part.</p>
+      </div>
+      <div class="problem-grid">
+        <article class="card">
+          <div class="icon-tile"><svg class="i"><use href="#i-trash"/></svg></div>
+          <h3>Electronic and mechanical waste</h3>
+          <p>Working parts get thrown out or stored away because there is no easy way to pass them on.</p>
+        </article>
+        <article class="card">
+          <div class="icon-tile"><svg class="i"><use href="#i-tag"/></svg></div>
+          <h3>Expensive replacement parts</h3>
+          <p>Buying new can cost more than a repair is worth, so people end up replacing whole devices.</p>
+        </article>
+        <article class="card">
+          <div class="icon-tile"><svg class="i"><use href="#i-search"/></svg></div>
+          <h3>Hard-to-find components</h3>
+          <p>Specific models and older parts are difficult to track down on general marketplaces.</p>
+        </article>
+        <article class="card">
+          <div class="icon-tile"><svg class="i"><use href="#i-shield-alert"/></svg></div>
+          <h3>Little trust in used parts</h3>
+          <p>Buyers can't tell whether a used part works, and honest sellers can't easily prove that it does.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Solution -->
+  <section class="section" id="solution">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>A smart exchange between the part and the person who needs it.</h2>
+        <p class="lead">E Xchange is an intelligent platform that brings supply and demand together, and takes care of the awkward steps in between.</p>
+      </div>
+      <div class="solution-panel">
+        <article class="solution-item">
+          <div class="icon-tile"><svg class="i"><use href="#i-match"/></svg></div>
+          <div>
+            <h3>Matches demand with available components</h3>
+            <p>Requests and listings are compared so the right part finds the right person.</p>
+          </div>
+        </article>
+        <article class="solution-item">
+          <div class="icon-tile blue"><svg class="i"><use href="#i-chart"/></svg></div>
+          <div>
+            <h3>Analyzes listings and suggests prices</h3>
+            <p>Each listing is evaluated and a fair price is suggested, so sellers and buyers start from the same number.</p>
+          </div>
+        </article>
+        <article class="solution-item">
+          <div class="icon-tile"><svg class="i"><use href="#i-pulse"/></svg></div>
+          <div>
+            <h3>Helps verify and test components</h3>
+            <p>Parts can be inspected or tested so buyers know what they are getting.</p>
+          </div>
+        </article>
+        <article class="solution-item">
+          <div class="icon-tile blue"><svg class="i"><use href="#i-shield-check"/></svg></div>
+          <div>
+            <h3>Facilitates secure transactions</h3>
+            <p>Payment is coordinated through the platform instead of a leap of faith between strangers.</p>
+          </div>
+        </article>
+        <article class="solution-item">
+          <div class="icon-tile"><svg class="i"><use href="#i-truck"/></svg></div>
+          <div>
+            <h3>Coordinates delivery</h3>
+            <p>Handover or shipping is arranged so the part actually reaches the buyer.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. How it works -->
+  <section class="section section--mist" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How E Xchange works</h2>
+        <p class="lead">Five steps from a forgotten part to a working one in someone else's hands.</p>
+      </div>
+      <ol class="steps" id="steps">
+        <li class="step reveal">
+          <div class="step-top"><span class="step-num">1</span><svg class="i"><use href="#i-list"/></svg></div>
+          <h3>List</h3>
+          <p>Someone lists a component, describing what it is and what condition it is in.</p>
+        </li>
+        <li class="step reveal">
+          <div class="step-top"><span class="step-num">2</span><svg class="i"><use href="#i-chart"/></svg></div>
+          <h3>Analyze</h3>
+          <p>E Xchange evaluates the item and suggests a fair price.</p>
+        </li>
+        <li class="step reveal">
+          <div class="step-top"><span class="step-num">3</span><svg class="i"><use href="#i-match"/></svg></div>
+          <h3>Match</h3>
+          <p>The system finds someone who is looking for that component.</p>
+        </li>
+        <li class="step reveal">
+          <div class="step-top"><span class="step-num">4</span><svg class="i"><use href="#i-pulse"/></svg></div>
+          <h3>Verify</h3>
+          <p>The component can be tested or inspected before the exchange is completed.</p>
+        </li>
+        <li class="step reveal">
+          <div class="step-top"><span class="step-num">5</span><svg class="i"><use href="#i-exchange"/></svg></div>
+          <h3>Exchange</h3>
+          <p>Payment and delivery are facilitated for both sides.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 5. Example -->
+  <section class="section" id="example">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>See it in an example</h2>
+      </div>
+      <blockquote class="quote">"Kim needs a motherboard. Another user has an unused motherboard."</blockquote>
+
+      <div class="flow" id="flow" role="list" aria-label="Example journey of a motherboard exchange">
+        <button class="flow-node" type="button" data-i="0" role="listitem">
+          <span class="icon-tile"><svg class="i"><use href="#i-search"/></svg></span>
+          <span class="label">Need</span>
+        </button>
+        <button class="flow-node" type="button" data-i="1" role="listitem">
+          <span class="icon-tile"><svg class="i"><use href="#i-exchange"/></svg></span>
+          <span class="label">E Xchange</span>
+        </button>
+        <button class="flow-node" type="button" data-i="2" role="listitem">
+          <span class="icon-tile"><svg class="i"><use href="#i-match"/></svg></span>
+          <span class="label">Match</span>
+        </button>
+        <button class="flow-node" type="button" data-i="3" role="listitem">
+          <span class="icon-tile"><svg class="i"><use href="#i-pulse"/></svg></span>
+          <span class="label">Test</span>
+        </button>
+        <button class="flow-node" type="button" data-i="4" role="listitem">
+          <span class="icon-tile"><svg class="i"><use href="#i-wallet"/></svg></span>
+          <span class="label">Payment</span>
+        </button>
+        <button class="flow-node" type="button" data-i="5" role="listitem">
+          <span class="icon-tile"><svg class="i"><use href="#i-truck"/></svg></span>
+          <span class="label">Delivery</span>
+        </button>
+      </div>
+
+      <div class="flow-caption" id="flow-caption" aria-live="polite">
+        <strong>Need</strong>
+        <span>Kim posts a request for a motherboard, including the model or specifications.</span>
+      </div>
+
+      <div class="flow-foot">
+        <button class="btn btn-ghost" type="button" id="flow-play">
+          <svg class="i" style="width:1.1rem;height:1.1rem;fill:currentColor;stroke:none"><use href="#i-play"/></svg>
+          <span id="flow-play-label">Play the example</span>
+        </button>
+        <p>Select any stage to read what would happen there. Illustrative walkthrough only.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Why it matters -->
+  <section class="section section--mist" id="why">
+    <div class="wrap why-grid">
+      <div class="why-intro">
+        <h2>Every part reused is one less thing wasted.</h2>
+        <p class="lead">A part that works should end up where it is useful. E Xchange is built around that simple idea.</p>
+      </div>
+      <ul class="why-list">
+        <li class="why-item">
+          <div class="icon-tile"><svg class="i"><use href="#i-refresh"/></svg></div>
+          <div>
+            <h3>Extends the life of electronics and mechanical components</h3>
+            <p>Parts keep working in a second home instead of ending their life early.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <div class="icon-tile"><svg class="i"><use href="#i-leaf"/></svg></div>
+          <div>
+            <h3>Reduces unnecessary waste</h3>
+            <p>Fewer working components are discarded, and fewer devices are replaced outright.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <div class="icon-tile blue"><svg class="i"><use href="#i-coin"/></svg></div>
+          <div>
+            <h3>Makes repairs more affordable</h3>
+            <p>A matching used part can cost far less than a brand-new replacement.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <div class="icon-tile blue"><svg class="i"><use href="#i-box"/></svg></div>
+          <div>
+            <h3>Creates value from unused equipment</h3>
+            <p>What sits in a drawer becomes something another person is glad to find.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <div class="icon-tile"><svg class="i"><use href="#i-shield-check"/></svg></div>
+          <div>
+            <h3>Builds a trusted circular marketplace</h3>
+            <p>Testing, fair pricing, and secure handling make buying used feel safe.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. Future -->
+  <section class="section" id="future">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Starting with electronics. Built to grow.</h2>
+        <p class="lead">The same idea works anywhere a specific used part sits idle while someone else needs it. E Xchange could eventually expand into these areas.</p>
+      </div>
+      <div class="future-grid">
+        <article class="card">
+          <div class="icon-tile"><svg class="i"><use href="#i-cpu"/></svg></div>
+          <h3>Computer components</h3>
+          <p>Motherboards, memory, storage, power supplies, and other parts for building and repairing computers.</p>
+        </article>
+        <article class="card">
+          <div class="icon-tile blue"><svg class="i"><use href="#i-factory"/></svg></div>
+          <h3>Industrial equipment</h3>
+          <p>Spare parts and machinery components from workshops, plants, and job sites.</p>
+        </article>
+        <article class="card">
+          <div class="icon-tile"><svg class="i"><use href="#i-car"/></svg></div>
+          <h3>Automotive parts</h3>
+          <p>Used vehicle parts that keep cars, trucks, and motorbikes on the road.</p>
+        </article>
+        <article class="card">
+          <div class="icon-tile blue"><svg class="i"><use href="#i-bolt"/></svg></div>
+          <h3>Electrical components</h3>
+          <p>Switches, motors, controllers, and other electrical parts for repairs and projects.</p>
+        </article>
+        <article class="card">
+          <div class="icon-tile"><svg class="i"><use href="#i-gear"/></svg></div>
+          <h3>Mechanical parts</h3>
+          <p>Gears, bearings, fittings, and other mechanical components that are hard to source individually.</p>
+        </article>
+      </div>
+      <p class="future-note">Future direction only. The current prototype focuses on the core exchange idea.</p>
+    </div>
+  </section>
+
+  <!-- Closing -->
+  <section class="closing">
+    <div class="wrap">
+      <h2>Don't throw it away. Someone else may need it.</h2>
+      <p>E Xchange is a hackathon prototype exploring how unused electronic and mechanical parts could find a second life.</p>
+      <a class="btn btn-light" href="#top">Back to top</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <p>E Xchange is a hackathon prototype and concept. Listings, users, prices, and transactions described on this page are illustrative and not real.</p>
+    <p>E Xchange</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Mobile menu */
+  var btn = document.getElementById('menu-btn');
+  var mnav = document.getElementById('mobile-nav');
+  function setMenu(open) {
+    btn.setAttribute('aria-expanded', String(open));
+    mnav.classList.toggle('open', open);
+  }
+  btn.addEventListener('click', function () { setMenu(btn.getAttribute('aria-expanded') !== 'true'); });
+  mnav.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+
+  /* Hero animation: freeze on a readable frame if reduced motion */
+  var svg = document.getElementById('hero-svg');
+  if (reduce && svg.pauseAnimations) {
+    try { svg.setCurrentTime(3.6); svg.pauseAnimations(); } catch (e) {}
+  }
+
+  /* Staggered reveal for the steps */
+  var stepEls = document.querySelectorAll('.step.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    var stepObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          stepEls.forEach(function (el, i) {
+            el.style.transitionDelay = (i * 110) + 'ms';
+            el.classList.add('in');
+          });
+          stepObs.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    stepObs.observe(document.getElementById('steps'));
+  } else {
+    stepEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* Example flow */
+  var stages = [
+    { t: 'Need', d: 'Kim posts a request for a motherboard, including the model or specifications.' },
+    { t: 'E Xchange', d: 'The request is compared against the components other users have listed.' },
+    { t: 'Match', d: 'Another user has an unused motherboard that fits, and both sides are connected.' },
+    { t: 'Test', d: 'The board is tested or inspected so Kim knows it works before committing.' },
+    { t: 'Payment', d: 'A fair, suggested price is agreed and payment is coordinated through the platform.' },
+    { t: 'Delivery', d: 'The motherboard is shipped or handed over, and the exchange is completed.' }
+  ];
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('.flow-node'));
+  var caption = document.getElementById('flow-caption');
+  var playBtn = document.getElementById('flow-play');
+  var playLabel = document.getElementById('flow-play-label');
+  var timer = null;
+  var current = 0;
+
+  function show(i) {
+    current = i;
+    nodes.forEach(function (n, idx) {
+      if (idx === i) n.setAttribute('aria-current', 'step'); else n.removeAttribute('aria-current');
+      n.classList.toggle('done', idx < i);
+    });
+    caption.innerHTML = '';
+    var s = document.createElement('strong'); s.textContent = stages[i].t;
+    var p = document.createElement('span'); p.textContent = stages[i].d;
+    caption.appendChild(s); caption.appendChild(p);
+  }
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+    playLabel.textContent = 'Play the example';
+  }
+  function play() {
+    stop();
+    show(0);
+    playLabel.textContent = 'Playing';
+    timer = setInterval(function () {
+      if (current >= stages.length - 1) { stop(); playLabel.textContent = 'Replay'; return; }
+      show(current + 1);
+    }, 1700);
+  }
+  nodes.forEach(function (n) {
+    n.addEventListener('click', function () { stop(); show(Number(n.dataset.i)); });
+  });
+  playBtn.addEventListener('click', play);
+  show(0);
+
+  var flowEl = document.getElementById('flow');
+  if ('IntersectionObserver' in window && !reduce) {
+    var flowObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { play(); flowObs.disconnect(); }
+      });
+    }, { threshold: 0.6 });
+    flowObs.observe(flowEl);
+  }
+})();
+</script>
+</body>
+</html>
