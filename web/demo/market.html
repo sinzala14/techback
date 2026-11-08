@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TechBack Market - Save-to-Own &amp; Circular E-Commerce Demo</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="alternate icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    #view { max-width: 1080px; }
+
+    /* Save-to-Own Token Qualification Banner */
+    .sto-banner {
+      background: linear-gradient(135deg, #0f3823 0%, #165e3e 60%, #1f7a4c 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 1.4rem;
+      box-shadow: 0 10px 28px rgba(15, 56, 35, 0.16);
+      display: grid;
+      gap: 1.1rem;
+    }
+    @media (min-width: 760px) {
+      .sto-banner {
+        grid-template-columns: 1.35fr 1fr;
+        align-items: center;
+      }
+    }
+    .sto-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      background: rgba(255, 255, 255, 0.15);
+      color: #a7f3d0;
+      padding: .28rem .7rem;
+      border-radius: 999px;
+      margin-bottom: .5rem;
+    }
+    .sto-banner h2 {
+      color: #fff;
+      font-size: 1.35rem;
+      margin: 0 0 .35rem;
+      line-height: 1.25;
+    }
+    .sto-banner p {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: .88rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .sto-meter-card {
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      backdrop-filter: blur(8px);
+    }
+    .sto-meter-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: .45rem;
+      font-size: .84rem;
+    }
+    .sto-meter-top b {
+      font-size: 1.15rem;
+      color: #fde047;
+    }
+    .sto-progress-track {
+      width: 100%;
+      height: 11px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: .55rem;
+    }
+    .sto-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #fde047, #4ade80);
+      border-radius: 999px;
+      transition: width .35s ease;
+    }
+    .sto-meter-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .6rem;
+      flex-wrap: wrap;
+      font-size: .78rem;
+      color: #e2f3ea;
+    }
+    .btn-earn-sim {
+      background: #fde047;
+      color: #0f3823;
+      border: none;
+      font-weight: 700;
+      font-size: .78rem;
+      padding: .42rem .8rem;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      transition: transform .15s, background .15s;
+    }
+    .btn-earn-sim:hover {
+      background: #fef08a;
+      transform: translateY(-1px);
+    }
+
+    /* How Save-to-Own Works strip */
+    .sto-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: .75rem;
+      margin-bottom: 1.4rem;
+    }
+    .sto-step {
+      background: #fff;
+      border: 1px solid var(--bei);
+      border-radius: 12px;
+      padding: .85rem 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+    }
+    .sto-step-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--s2);
+      color: var(--g);
+      display: grid;
+      place-items: center;
+      font-size: .95rem;
+      flex-shrink: 0;
+    }
+    .sto-step b {
+      display: block;
+      font-size: .86rem;
+      color: var(--tx);
+      margin-bottom: .15rem;
+    }
+    .sto-step span {
+      font-size: .76rem;
+      color: var(--mu);
+      line-height: 1.35;
+      display: block;
+    }
+
+    /* Store Grid */
+    .store-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.15rem;
+      margin-top: 1rem;
+    }
+    .product-card {
+      background: #fff;
+      border: 1px solid var(--bei);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(15, 56, 35, 0.09);
+      border-color: var(--g2);
+    }
+    .product-img-wrap {
+      position: relative;
+      height: 205px;
+      background: #f8faf9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: .75rem;
+      border-bottom: 1px solid var(--bei);
+    }
+    .product-img-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      transition: transform .25s ease;
+    }
+    .product-card:hover .product-img-wrap img {
+      transform: scale(1.04);
+    }
+    .cat-pill {
+      position: absolute;
+      top: .65rem;
+      left: .65rem;
+      background: rgba(15, 56, 35, 0.88);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: .22rem .6rem;
+      border-radius: 999px;
+    }
+    .req-pill {
+      position: absolute;
+      bottom: .65rem;
+      right: .65rem;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .24rem .62rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .req-pill.qualified {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+    .req-pill.locked {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .product-body {
+      padding: 1rem 1.1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .product-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--tx);
+      margin: 0 0 .3rem;
+      line-height: 1.3;
+    }
+    .product-specs {
+      font-size: .78rem;
+      color: var(--mu);
+      margin-bottom: .85rem;
+      line-height: 1.4;
+    }
+
+    .price-box {
+      background: var(--s2);
+      border: 1px solid var(--bei);
+      border-radius: 10px;
+      padding: .7rem .85rem;
+      margin-top: auto;
+      margin-bottom: .85rem;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: .8rem;
+      color: var(--mu);
+    }
+    .price-row strong {
+      font-size: 1.05rem;
+      color: var(--tx);
+    }
+    .sto-highlight {
+      margin-top: .4rem;
+      padding-top: .4rem;
+      border-top: 1px dashed var(--bei);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .8rem;
+      color: var(--g);
+      font-weight: 700;
+    }
+    .sto-highlight span {
+      background: #dcfce7;
+      color: #15803d;
+      padding: .15rem .45rem;
+      border-radius: 6px;
+      font-size: .72rem;
+    }
+
+    .product-actions {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: .5rem;
+    }
+    .product-actions .btn {
+      padding: .55rem .65rem;
+      font-size: .82rem;
+      text-align: center;
+      justify-content: center;
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+    }
+
+    /* Save-to-Own Checkout / Simulator Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 29, 21, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      place-items: center;
+      z-index: 200;
+      padding: 1rem;
+    }
+    .modal-backdrop.open {
+      display: grid;
+    }
+    .modal-card {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 580px;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 1.35rem 1.5rem;
+      border: 1px solid var(--bei);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22);
+      animation: fade .2s ease both;
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: .75rem;
+      border-bottom: 1px solid var(--bei);
+      margin-bottom: 1rem;
+    }
+    .modal-head h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: var(--g);
+    }
+    .modal-close {
+      background: var(--s2);
+      border: 1px solid var(--bei);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--tx);
+    }
+    .plan-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .55rem;
+      margin: .65rem 0 1rem;
+    }
+    .plan-opt {
+      border: 1.5px solid var(--bei);
+      border-radius: 10px;
+      padding: .65rem .5rem;
+      text-align: center;
+      cursor: pointer;
+      background: #fff;
+      transition: border-color .15s, background .15s;
+    }
+    .plan-opt.active {
+      border-color: var(--g);
+      background: #eef6f1;
+    }
+    .plan-opt b {
+      display: block;
+      font-size: .88rem;
+      color: var(--g);
+    }
+    .plan-opt span {
+      font-size: .73rem;
+      color: var(--mu);
+    }
+    .qual-alert {
+      border-radius: 10px;
+      padding: .75rem .9rem;
+      margin-bottom: .9rem;
+      font-size: .83rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+    .qual-alert.ok {
+      background: #ecfdf5;
+      border: 1px solid #86efac;
+      color: #14532d;
+    }
+    .qual-alert.warn {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+    }
+    .schedule-box {
+      background: var(--bg);
+      border: 1px solid var(--bei);
+      border-radius: 10px;
+      padding: .85rem 1rem;
+      margin-bottom: 1rem;
+      font-size: .84rem;
+    }
+    .schedule-row {
+      display: flex;
+      justify-content: space-between;
+      padding: .3rem 0;
+      border-bottom: 1px dashed var(--bei);
+    }
+    .schedule-row:last-child {
+      border-bottom: 0;
+      padding-top: .5rem;
+      font-weight: 700;
+      color: var(--g);
+      font-size: .95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TECHBACK DEMO HEADER -->
+  <header id="top">
+    <div class="bar">
+      <a class="brand" href="../index.html"><i class="fa-solid fa-recycle"></i> Techback</a>
+      <nav aria-label="Main">
+        <a href="market.html" class="on"><i class="fa-solid fa-store"></i><span>Market</span></a>
+        <a href="auction.html"><i class="fa-solid fa-gavel"></i><span>Auction</span></a>
+        <a href="index.html" class="prim"><i class="fa-solid fa-leaf"></i><span>Eco</span></a>
+        <a href="repair.html"><i class="fa-solid fa-screwdriver-wrench"></i><span>Repair</span></a>
+        <a href="recycle.html"><i class="fa-solid fa-recycle"></i><span>E-Waste</span></a>
+      </nav>
+      <div class="tools">
+        <a class="ib" href="../index.html" title="Back to Main Website" aria-label="Home" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);font-size:.95rem"><i class="fa-solid fa-house"></i></a>
+        <a class="credit-pill" href="#top" title="Green Tokens Wallet"><i class="fa-solid fa-coins"></i><span id="nav-token-count">96 Tokens</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="view">
+    <h1><i class="fa-solid fa-store" style="color:var(--g)"></i> TechBack Access Market &amp; Save-to-Own</h1>
+
+    <!-- TOKEN QUALIFICATION BANNER -->
+    <section class="sto-banner" aria-label="Save-to-Own Token Qualification">
+      <div>
+        <span class="sto-badge"><i class="fa-solid fa-seedling"></i> TechBack Access • Save-to-Own Programme</span>
+        <h2>Build Green Tokens to Unlock 0% Save-to-Own Device Plans</h2>
+        <p>Can’t pay the full upfront cost for a laptop or smartphone? Hand in old e-waste, broken screens, or dead batteries to build your <b>Green Token score</b>. Once you reach a product’s token qualification threshold, you unlock flexible <b>Save-to-Own instalments</b>—and your tokens convert into a direct deposit discount!</p>
+      </div>
+
+      <div class="sto-meter-card">
+        <div class="sto-meter-top">
+          <span>Your Qualification Wallet:</span>
+          <b id="banner-tokens"><i class="fa-solid fa-coins"></i> 96 / 120 Tokens</b>
+        </div>
+        <div class="sto-progress-track">
+          <div class="sto-progress-bar" id="banner-bar" style="width: 80%;"></div>
+        </div>
+        <div class="sto-meter-foot">
+          <span id="banner-status"><i class="fa-solid fa-circle-info"></i> Collect <b>24 more tokens</b> for Tier-1 Laptop Save-to-Own</span>
+          <button type="button" class="btn-earn-sim" id="btn-sim-tokens" onclick="simulateEarnTokens()">
+            <i class="fa-solid fa-plus-circle"></i> +30 Tokens (Simulate Hand-in)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3-STEP EXPLAINER STRIP -->
+    <div class="sto-steps">
+      <div class="sto-step">
+        <div class="sto-step-icon"><i class="fa-solid fa-coins"></i></div>
+        <div>
+          <b>1. Build Qualification Tokens</b>
+          <span>Earn Green Tokens by recycling e-waste or booking campus repairs (80–120 Tokens qualifies you).</span>
+        </div>
+      </div>
+      <div class="sto-step">
+        <div class="sto-step-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+        <div>
+          <b>2. Lock Your Save-to-Own Plan</b>
+          <span>Redeem tokens to reduce your initial deposit and lock the device price over 4, 8, or 12 weeks.</span>
+        </div>
+      </div>
+      <div class="sto-step">
+        <div class="sto-step-icon"><i class="fa-solid fa-laptop-medical"></i></div>
+        <div>
+          <b>3. Own Verified Tech</b>
+          <span>Pay manageable Mobile Money milestones and receive your quality-tested device with warranty.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY FILTER TABS -->
+    <div class="seg" id="market-cats">
+      <a class="on" data-cat="all"><i class="fa-solid fa-border-all"></i> All Tech (7)</a>
+      <a data-cat="laptop"><i class="fa-solid fa-laptop"></i> Student Laptops</a>
+      <a data-cat="phone"><i class="fa-solid fa-mobile-screen-button"></i> Smartphones</a>
+      <a data-cat="accessory"><i class="fa-solid fa-plug"></i> Accessories &amp; Parts</a>
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="store-grid" id="store-grid"></div>
+  </main>
+
+  <!-- INTERACTIVE SAVE-TO-OWN / BUY MODAL -->
+  <div class="modal-backdrop" id="sto-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="modal-title"><i class="fa-solid fa-piggy-bank"></i> Save-to-Own Plan Configurator</h3>
+        <button type="button" class="modal-close" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    // User Token Wallet State (1 Token = ZMW 0.50 discount + qualification credit)
+    let userTokens = 96;
+
+    const PRODUCTS = [
+      {
+        id: 'acer-aspire-5',
+        title: 'Acer Aspire 5 Full HD Student Laptop (Core i5, 16GB RAM, 512GB SSD)',
+        category: 'laptop',
+        badge: 'Student Laptop Programme',
+        image: 'store%20images/acer-laptop.jpg',
+        specs: '15.6" 1080p IPS Display · Certified Refurbished Grade A+ · 6-Month TechBack Warranty',
+        price: 6800,
+        reqTokens: 120,
+        weeklyFrom: 480
+      },
+      {
+        id: 'dell-g5-workstation',
+        title: 'Dell G5 15 Performance & Engineering Laptop (Core i7, GTX Graphics)',
+        category: 'laptop',
+        badge: 'Engineering & Coding Pick',
+        image: 'store%20images/dell-laptop.jpg',
+        specs: '15.6" FHD · Dual-Fan Cooling · 16GB DDR4 + 512GB NVMe · Ideal for CS & CAD Students',
+        price: 8400,
+        reqTokens: 120,
+        weeklyFrom: 600
+      },
+      {
+        id: 'galaxy-z-flip',
+        title: 'Samsung Galaxy Z Flip 5G (256GB, Certified Refurbished)',
+        category: 'phone',
+        badge: 'Certified Refurbished',
+        image: 'store%20images/smartphone.webp',
+        specs: 'Foldable Dynamic AMOLED 2X · 100% Battery Health Verified · Unlocked All Networks',
+        price: 5200,
+        reqTokens: 100,
+        weeklyFrom: 375
+      },
+      {
+        id: 'logitech-g502',
+        title: 'Logitech G502 Lightspeed Wireless Ergonomic Mouse',
+        category: 'accessory',
+        badge: 'Campus Accessory',
+        image: 'store%20images/wireless-mouse.jpg',
+        specs: 'High-Precision Optical Sensor · Programmable Buttons · Tested & Sanitized',
+        price: 650,
+        reqTokens: 60,
+        weeklyFrom: 110
+      },
+      {
+        id: 'thanbao-usbc-hub',
+        title: '7-in-1 USB-C Multiport Hub (HDMI 4K, 3× USB 3.0, SD/TF Card Reader)',
+        category: 'accessory',
+        badge: 'New Accessory',
+        image: 'store%20images/usbc-hub.jpg',
+        specs: 'Aluminum Unibody · Plug & Play for Laptops & Tablets · Fast Data Transfer',
+        price: 420,
+        reqTokens: 50,
+        weeklyFrom: 80
+      },
+      {
+        id: 'laptop-battery-bty',
+        title: 'Genuine OEM Lithium-Ion Laptop Replacement Battery (4400mAh)',
+        category: 'accessory',
+        badge: 'Recovered Donor Part',
+        image: 'store%20images/laptop-battery.png',
+        specs: '94%+ Cycle Capacity Verified · Overcharge Protection · Free Campus Installation',
+        price: 540,
+        reqTokens: 60,
+        weeklyFrom: 95
+      },
+      {
+        id: 'ddr4-ram-8gb',
+        title: '8GB SO-DIMM Laptop Memory Upgrade Module (Tested Pull)',
+        category: 'accessory',
+        badge: 'Circular Component',
+        image: 'store%20images/ram-module.jpg',
+        specs: 'MemTest86 Passed 100% · Harvested via TechBack Recovery · Instant Laptop Speed Boost',
+        price: 380,
+        reqTokens: 40,
+        weeklyFrom: 70
+      }
+    ];
+
+    let activeCategory = 'all';
+    let selectedProduct = null;
+    let selectedWeeks = 8;
+    let currentMode = 'sto'; // 'sto' (Save-to-Own) or 'cash' (Buy Outright)
+
+    function zmw(n) {
+      return 'ZMW ' + Number(n).toLocaleString('en-ZM', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function updateTokenUI() {
+      document.getElementById('nav-token-count').textContent = userTokens + ' Tokens';
+      document.getElementById('banner-tokens').innerHTML = `<i class="fa-solid fa-coins"></i> ${userTokens} / 120 Tokens`;
+      const pct = Math.min(100, Math.round((userTokens / 120) * 100));
+      document.getElementById('banner-bar').style.width = pct + '%';
+
+      const statusEl = document.getElementById('banner-status');
+      if (userTokens >= 120) {
+        statusEl.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#4ade80"></i> <b>QUALIFIED!</b> All Save-to-Own Laptop &amp; Phone plans unlocked (${zmw(userTokens * 0.5)} discount value)`;
+      } else {
+        const needed = 120 - userTokens;
+        statusEl.innerHTML = `<i class="fa-solid fa-circle-info"></i> Collect <b>${needed} more tokens</b> for Tier-1 Laptop Save-to-Own`;
+      }
+      renderGrid();
+      if (selectedProduct) renderModalContent();
+    }
+
+    function simulateEarnTokens() {
+      userTokens += 30;
+      updateTokenUI();
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('store-grid');
+      const items = activeCategory === 'all'
+        ? PRODUCTS
+        : PRODUCTS.filter(p => p.category === activeCategory);
+
+      grid.innerHTML = items.map(p => {
+        const isQualified = userTokens >= p.reqTokens;
+        const needed = Math.max(0, p.reqTokens - userTokens);
+        return `
+          <article class="product-card">
+            <div class="product-img-wrap">
+              <span class="cat-pill">${p.badge}</span>
+              <img src="${p.image}" alt="${p.title}" loading="lazy">
+              <span class="req-pill ${isQualified ? 'qualified' : 'locked'}">
+                <i class="fa-solid ${isQualified ? 'fa-unlock-keyhole' : 'fa-lock'}"></i>
+                ${isQualified ? `Qualified (${p.reqTokens} Tokens)` : `Requires ${p.reqTokens} Tokens (Need ${needed})`}
+              </span>
+            </div>
+            <div class="product-body">
+              <h3 class="product-title">${p.title}</h3>
+              <p class="product-specs">${p.specs}</p>
+
+              <div class="price-box">
+                <div class="price-row">
+                  <span>Full Cash Price</span>
+                  <strong>${zmw(p.price)}</strong>
+                </div>
+                <div class="sto-highlight">
+                  <div><i class="fa-solid fa-piggy-bank"></i> Save-to-Own: from ${zmw(p.weeklyFrom)}/wk</div>
+                  <span>0% Interest</span>
+                </div>
+              </div>
+
+              <div class="product-actions">
+                <button type="button" class="btn pri" onclick="openModal('${p.id}', 'sto')">
+                  <i class="fa-solid fa-calendar-check"></i> Save-to-Own
+                </button>
+                <button type="button" class="btn sec" onclick="openModal('${p.id}', 'cash')">
+                  <i class="fa-solid fa-cart-shopping"></i> Buy Cash
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // Category tab switching
+    document.querySelectorAll('#market-cats a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelectorAll('#market-cats a').forEach(x => x.classList.remove('on'));
+        a.classList.add('on');
+        activeCategory = a.dataset.cat;
+        renderGrid();
+      });
+    });
+
+    function openModal(productId, mode) {
+      selectedProduct = PRODUCTS.find(p => p.id === productId);
+      currentMode = mode || 'sto';
+      selectedWeeks = 8;
+      renderModalContent();
+      document.getElementById('sto-modal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('sto-modal').classList.remove('open');
+      selectedProduct = null;
+    }
+
+    function selectWeeks(w) {
+      selectedWeeks = w;
+      renderModalContent();
+    }
+
+    function switchMode(m) {
+      currentMode = m;
+      renderModalContent();
+    }
+
+    function renderModalContent() {
+      const p = selectedProduct;
+      if (!p) return;
+
+      const isQualified = userTokens >= p.reqTokens;
+      const needed = Math.max(0, p.reqTokens - userTokens);
+      const tokenDiscountZmw = Math.min(p.price * 0.15, userTokens * 0.5); // 1 token = ZMW 0.50
+      const tokensUsed = Math.round(tokenDiscountZmw * 2);
+      const netPrice = p.price - tokenDiscountZmw;
+
+      // Save-to-Own Deposit (20% before token discount, reduced by token discount)
+      const initialDeposit = Math.max(50, Math.round(netPrice * 0.25));
+      const remainingBalance = netPrice - initialDeposit;
+      const weeklyInstallment = remainingBalance / selectedWeeks;
+
+      const titleEl = document.getElementById('modal-title');
+      titleEl.innerHTML = currentMode === 'sto'
+        ? `<i class="fa-solid fa-piggy-bank"></i> Save-to-Own Plan &amp; Token Qualification`
+        : `<i class="fa-solid fa-bolt"></i> Instant Outright Purchase`;
+
+      const body = document.getElementById('modal-body');
+
+      body.innerHTML = `
+        <div style="display:flex;gap:.9rem;align-items:center;margin-bottom:1rem;background:var(--bg);padding:.75rem;border-radius:10px;border:1px solid var(--bei)">
+          <img src="${p.image}" alt="${p.title}" style="width:74px;height:74px;object-fit:contain;background:#fff;border-radius:8px;padding:4px;border:1px solid var(--bei)">
+          <div>
+            <div style="font-size:.74rem;font-weight:700;color:var(--g)">${p.badge}</div>
+            <b style="font-size:.95rem;display:block;line-height:1.25">${p.title}</b>
+            <span class="meta">Retail Price: <b>${zmw(p.price)}</b> · Qualification Requirement: <b>${p.reqTokens} Tokens</b></span>
+          </div>
+        </div>
+
+        <div class="seg" style="margin-bottom:1rem">
+          <a class="${currentMode === 'sto' ? 'on' : ''}" onclick="switchMode('sto')" style="cursor:pointer">
+            <i class="fa-solid fa-calendar-check"></i> Save-to-Own Plan
+          </a>
+          <a class="${currentMode === 'cash' ? 'on' : ''}" onclick="switchMode('cash')" style="cursor:pointer">
+            <i class="fa-solid fa-money-bill-wave"></i> Pay Full Cash
+          </a>
+        </div>
+
+        ${currentMode === 'sto' ? `
+          <!-- Qualification Check Banner -->
+          <div class="qual-alert ${isQualified ? 'ok' : 'warn'}">
+            <div>
+              <i class="fa-solid ${isQualified ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i>
+              ${isQualified
+                ? `<b>Token Qualification Passed!</b> You have <b>${userTokens} Tokens</b> (minimum ${p.reqTokens} required).`
+                : `<b>Need ${needed} More Tokens to Qualify!</b> This Save-to-Own plan requires <b>${p.reqTokens} Green Tokens</b> (you have ${userTokens}).`
+              }
+            </div>
+            ${!isQualified ? `
+              <button type="button" class="btn pri" style="padding:.35rem .7rem;font-size:.78rem" onclick="simulateEarnTokens()">
+                <i class="fa-solid fa-recycle"></i> Simulate +30 Tokens Hand-in Now
+              </button>
+            ` : ''}
+          </div>
+
+          <label style="margin-bottom:.2rem">Select Save-to-Own Duration (0% Interest)</label>
+          <div class="plan-selector">
+            <div class="plan-opt ${selectedWeeks === 4 ? 'active' : ''}" onclick="selectWeeks(4)">
+              <b>4 Weeks</b>
+              <span>Fast Track</span>
+            </div>
+            <div class="plan-opt ${selectedWeeks === 8 ? 'active' : ''}" onclick="selectWeeks(8)">
+              <b>8 Weeks</b>
+              <span>Most Popular</span>
+            </div>
+            <div class="plan-opt ${selectedWeeks === 12 ? 'active' : ''}" onclick="selectWeeks(12)">
+              <b>12 Weeks</b>
+              <span>Lowest Weekly</span>
+            </div>
+          </div>
+
+          <div class="schedule-box">
+            <div class="schedule-row">
+              <span>Standard Device Price:</span>
+              <b>${zmw(p.price)}</b>
+            </div>
+            <div class="schedule-row" style="color:var(--g2)">
+              <span>Green Token Discount (${tokensUsed} Tokens Redeemed):</span>
+              <b>-${zmw(tokenDiscountZmw)}</b>
+            </div>
+            <div class="schedule-row">
+              <span>Net Save-to-Own Total:</span>
+              <b>${zmw(netPrice)}</b>
+            </div>
+            <div class="schedule-row">
+              <span>Weekly Milestone (${selectedWeeks} weeks):</span>
+              <b>${zmw(weeklyInstallment)} / week</b>
+            </div>
+            <div class="schedule-row">
+              <span>Due Today (25% Lock-in Deposit):</span>
+              <span>${zmw(initialDeposit)}</span>
+            </div>
+          </div>
+        ` : `
+          <div class="schedule-box">
+            <div class="schedule-row">
+              <span>Standard Device Price:</span>
+              <b>${zmw(p.price)}</b>
+            </div>
+            <div class="schedule-row" style="color:var(--g2)">
+              <span>Green Token Discount (${tokensUsed} Tokens Redeemed):</span>
+              <b>-${zmw(tokenDiscountZmw)}</b>
+            </div>
+            <div class="schedule-row">
+              <span>Total Due Today (Outright Purchase):</span>
+              <span>${zmw(netPrice)}</span>
+            </div>
+          </div>
+        `}
+
+        <form id="sto-checkout-form" onsubmit="event.preventDefault(); submitMarketOrder();">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+            <label>Payment Channel
+              <select>
+                <option selected>MTN Mobile Money (+260 96/97X)</option>
+                <option>Airtel Money (+260 97X)</option>
+                <option>Zamtel Kwacha (+260 95X)</option>
+              </select>
+            </label>
+            <label>Student / Customer Mobile Number
+              <input value="097 768 4056" required>
+            </label>
+          </div>
+
+          <button type="submit" class="btn pri blk" id="btn-sto-submit" style="margin-top:.85rem;font-size:1rem" ${currentMode === 'sto' && !isQualified ? 'disabled' : ''}>
+            <i class="fa-solid ${currentMode === 'sto' ? 'fa-lock' : 'fa-check-circle'}"></i>
+            ${currentMode === 'sto'
+              ? (isQualified ? `Activate Save-to-Own & Pay ${zmw(initialDeposit)} Deposit` : `Build ${needed} More Tokens to Unlock Save-to-Own`)
+              : `Confirm & Pay ${zmw(netPrice)} Now`
+            }
+          </button>
+        </form>
+
+        <div id="sto-success" style="display:none;margin-top:1rem;background:#ecfdf5;border:1px solid #86efac;border-radius:12px;padding:1.1rem;text-align:center">
+          <i class="fa-solid fa-circle-check" style="font-size:2.2rem;color:#10b981"></i>
+          <h3 style="margin:.4rem 0 .2rem;color:var(--g)">
+            ${currentMode === 'sto' ? 'Save-to-Own Plan Activated!' : 'Order Confirmed & Dispatched!'}
+          </h3>
+          <p class="meta" style="margin:0 0 .6rem">
+            ${currentMode === 'sto'
+              ? `Device reserved under Ref <b>TB-STO-${Math.floor(10000 + Math.random()*90000)}</b>. Your next ${selectedWeeks} weekly instalments of <b>${zmw(weeklyInstallment)}</b> are scheduled via Mobile Money.`
+              : `Receipt <b>TB-ORD-${Math.floor(10000 + Math.random()*90000)}</b> generated. Campus runner or pickup ready!`
+            }
+          </p>
+          <button type="button" class="btn sec" onclick="closeModal()">Back to Market</button>
+        </div>
+      `;
+    }
+
+    function submitMarketOrder() {
+      const btn = document.getElementById('btn-sto-submit');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Mobile Money USSD...';
+      }
+      setTimeout(() => {
+        const form = document.getElementById('sto-checkout-form');
+        const succ = document.getElementById('sto-success');
+        if (form) form.style.display = 'none';
+        if (succ) succ.style.display = 'block';
+      }, 900);
+    }
+
+    // Close modal on backdrop click or Escape
+    document.getElementById('sto-modal').addEventListener('click', e => {
+      if (e.target.id === 'sto-modal') closeModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Initial render
+    updateTokenUI();
+  </script>
+</body>
+</html>

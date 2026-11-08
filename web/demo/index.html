@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TechBack Demo - Eco Action &amp; Circular Checkout</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="alternate icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; animation: fade .2s ease both; }
+    .seg a { cursor: pointer; user-select: none; }
+    .scorecard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: .6rem;
+      margin: .8rem 0;
+    }
+    .scorecard-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: .65rem .75rem;
+      border: 1px solid var(--bei);
+      text-align: center;
+    }
+    .scorecard-val { font-size: 1.15rem; font-weight: 800; color: var(--g); }
+    .scorecard-lbl { font-size: .72rem; color: var(--mu); margin-top: .2rem; line-height: 1.2; }
+    .step-list { display: flex; flex-direction: column; gap: .6rem; margin: .8rem 0; }
+    .step-item { display: flex; align-items: flex-start; gap: .8rem; padding: .65rem .8rem; border-radius: 8px; background: #fff; border: 1px solid var(--bei); }
+    .step-item.active { border-color: #f59e0b; background: #fffbeb; }
+    .step-item.done { border-color: #10b981; background: #ecfdf5; }
+    .step-num { width: 26px; height: 26px; border-radius: 50%; background: #cbd5e1; color: #475569; display: grid; place-items: center; font-weight: 700; flex-shrink: 0; font-size: .8rem; }
+    .step-item.active .step-num { background: #f59e0b; color: #fff; }
+    .step-item.done .step-num { background: #10b981; color: #fff; }
+    .media-card {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid var(--bei);
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .media-thumb {
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1.5px solid var(--bei);
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      transition: transform .2s ease;
+    }
+    .media-thumb:hover {
+      transform: scale(1.03);
+    }
+    @media(max-width: 500px) {
+      .media-thumb {
+        width: 100%;
+        height: 220px;
+      }
+    }
+    .approved-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .76rem;
+      font-weight: 700;
+      color: #15803d;
+      background: #dcfce7;
+      border: 1px solid #bbf7d0;
+      padding: .2rem .55rem;
+      border-radius: 20px;
+      margin-bottom: .35rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TECHBACK DEMO HEADER -->
+  <header id="top">
+    <div class="bar">
+      <a class="brand" href="../index.html"><i class="fa-solid fa-recycle"></i> Techback</a>
+      <nav aria-label="Main">
+        <a href="market.html"><i class="fa-solid fa-store"></i><span>Market</span></a>
+        <a href="auction.html"><i class="fa-solid fa-gavel"></i><span>Auction</span></a>
+        <a href="index.html" class="prim on"><i class="fa-solid fa-leaf"></i><span>Eco</span></a>
+        <a href="repair.html"><i class="fa-solid fa-screwdriver-wrench"></i><span>Repair</span></a>
+        <a href="recycle.html"><i class="fa-solid fa-recycle"></i><span>E-Waste</span></a>
+      </nav>
+      <div class="tools">
+        <a class="ib" href="../index.html" title="Back to Main Website" aria-label="Home" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);font-size:.95rem"><i class="fa-solid fa-house"></i></a>
+        <a class="credit-pill" href="market.html" title="Wallet"><i class="fa-solid fa-coins"></i><span>96 Tokens</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="view">
+    <h1><i class="fa-solid fa-leaf" style="color:var(--g)"></i> Eco Action &amp; Circular Checkout</h1>
+    
+    <!-- ORIGINAL TECHBACK SEGMENTED TABS -->
+    <div class="seg" style="margin-bottom:1.2rem">
+      <a class="on" data-tab="auction"><i class="fa-solid fa-gavel"></i> Auction Payment</a>
+      <a data-tab="repair"><i class="fa-solid fa-screwdriver-wrench"></i> Repair Order</a>
+      <a data-tab="recycle"><i class="fa-solid fa-recycle"></i> E-Waste Hand-in</a>
+    </div>
+
+    <!-- ==================== TAB 1: AUCTION PAYMENT ==================== -->
+    <div id="pane-auction" class="tab-pane active">
+      <form class="card" id="form-auction" onsubmit="event.preventDefault(); submitAuction();">
+        <h3 style="margin-top:0"><i class="fa-solid fa-receipt" style="color:var(--g)"></i> Auction Winner Checkout</h3>
+        
+        <div class="media-card">
+          <img src="images/auction.jfif" alt="Auction Phone" class="media-thumb">
+          <img src="images/auction%20pc.jfif" alt="Auction Device" class="media-thumb">
+          <div style="flex:1;min-width:200px">
+            <div class="approved-tag">
+              <i class="fa-solid fa-circle-check"></i> Image approved and loaded
+            </div>
+            <div style="font-size:.85rem;font-weight:700;color:var(--tx)">Verified Donor Part &amp; Device Photos</div>
+            <div class="meta" style="font-size:.76rem;margin-top:.15rem">Physical inspection passed · 100% Genuine OEM verified</div>
+          </div>
+        </div>
+
+        <label>Donor Part / Item Title
+          <input value="iPhone 11 OLED Retina Display Assembly (Circular Donor Part)" readonly>
+        </label>
+        
+        <label>Provenance &amp; Quality Audit
+          <input value="Grade A+ Tested Donor Part · Salvaged from scrap chassis #891 · 100% Genuine OEM Touch" readonly>
+        </label>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+          <label>Winning Bid Amount
+            <input value="ZMW 480.00" readonly style="font-weight:700">
+          </label>
+          <label>Green Token Discount (10%)
+            <input value="-ZMW 48.00 (96 Tokens Burned)" readonly style="color:var(--g2);font-weight:700">
+          </label>
+        </div>
+
+        <label>Total Amount Due
+          <input value="ZMW 432.00" readonly style="font-size:1.2rem;font-weight:900;color:var(--g);background:#eef6f1;border-color:var(--g2)">
+        </label>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+          <label>Payment Method
+            <select>
+              <option selected>MTN Mobile Money (+260 97X)</option>
+              <option>Airtel Money (+260 97X)</option>
+              <option>Zamtel Kwacha (+260 95X)</option>
+              <option>Visa / Mastercard</option>
+            </select>
+          </label>
+          <label>Mobile Money Number
+            <input value="097 768 4056">
+          </label>
+        </div>
+
+        <button type="submit" class="btn pri blk" id="btn-pay" style="margin-top:.8rem;font-size:1.05rem">
+          <i class="fa-solid fa-lock"></i> Confirm &amp; Pay ZMW 432.00
+        </button>
+      </form>
+
+      <div id="auc-processing" class="card" style="display:none;text-align:center;padding:1.8rem">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size:2.2rem;color:var(--g)"></i>
+        <h3 style="margin:.8rem 0 .2rem">Processing Mobile Money USSD Gateway...</h3>
+        <p class="meta" style="margin:0">Simulating USSD PIN prompt on 0977684056 &amp; validating Green Tokens ledger...</p>
+      </div>
+
+      <div id="auc-receipt" class="card" style="display:none">
+        <div style="text-align:center;margin-bottom:.9rem">
+          <i class="fa-solid fa-circle-check" style="font-size:2.6rem;color:#10b981"></i>
+          <h2 style="margin:.3rem 0 .2rem;color:var(--g)">Payment Confirmed &amp; Dispatched!</h2>
+          <p class="meta">Transaction Ref: <b>GC-PAY-98231</b> · Instant Mobile Money Transfer</p>
+        </div>
+
+        <div class="card" style="background:#fff;margin-bottom:.9rem;padding:.9rem">
+          <div style="display:flex;justify-content:space-between;margin-bottom:.3rem">
+            <span>Total Paid by Buyer:</span>
+            <b>ZMW 432.00</b>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:.3rem;color:var(--g2)">
+            <span>Tokens Redeemed:</span>
+            <b>96 Tokens (-ZMW 48.00)</b>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:.3rem;padding-top:.4rem;border-top:1px dashed var(--bei)">
+            <span><i class="fa-solid fa-money-bill-transfer" style="color:#10b981"></i> Seller Immediate Payout:</span>
+            <b style="color:#10b981">ZMW 410.40</b>
+          </div>
+          <div style="display:flex;justify-content:space-between;color:#0284c7">
+            <span><i class="fa-solid fa-building-columns"></i> Techback 5% Platform Cut:</span>
+            <b>ZMW 21.60</b>
+          </div>
+        </div>
+
+        <div style="font-weight:700;color:var(--g);margin-bottom:.3rem">
+          <i class="fa-solid fa-leaf"></i> Environmental Impact Scorecard
+        </div>
+        <div class="scorecard-grid">
+          <div class="scorecard-item"><div class="scorecard-val">32.4 kg</div><div class="scorecard-lbl">CO₂ Emissions Averted vs New Screen</div></div>
+          <div class="scorecard-item"><div class="scorecard-val">1.2 kg</div><div class="scorecard-lbl">Toxic E-Waste Diverted from Landfill</div></div>
+          <div class="scorecard-item"><div class="scorecard-val">100%</div><div class="scorecard-lbl">Zero Virgin Mining Required</div></div>
+        </div>
+
+        <div class="acts" style="margin-top:1rem">
+          <button type="button" class="btn sec blk" onclick="resetAuction()">Replay Payment</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: REPAIR ORDER ==================== -->
+    <div id="pane-repair" class="tab-pane">
+      <form class="card" id="form-repair" onsubmit="event.preventDefault(); submitRepair();">
+        <h3 style="margin-top:0"><i class="fa-solid fa-screwdriver-wrench" style="color:var(--g)"></i> Book a Campus Repair</h3>
+
+        <div class="media-card">
+          <img src="images/repair.jfif" alt="Repair Item" class="media-thumb">
+          <div style="flex:1;min-width:200px">
+            <div class="approved-tag">
+              <i class="fa-solid fa-circle-check"></i> Image approved and loaded
+            </div>
+            <div style="font-size:.85rem;font-weight:700;color:var(--tx)">Intake Device Diagnostic Photo</div>
+            <div class="meta" style="font-size:.76rem;margin-top:.15rem">Cracked display &amp; degraded battery documented for technician</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+          <label>Customer Name
+            <input value="Frank Chileshe (UNZA Student)" readonly>
+          </label>
+          <label>Contact Phone
+            <input value="097 768 4056" readonly>
+          </label>
+        </div>
+
+        <label>Device Model
+          <input value="Samsung Galaxy S21 5G (Phantom Gray, 128GB)" readonly>
+        </label>
+
+        <label>Reported Hardware Issues
+          <input value="Cracked AMOLED display panel &amp; swollen degraded battery" readonly>
+        </label>
+
+        <label>Collection Service
+          <input value="Free Student Runner Collection on Campus (Hall 3, Room 14)" readonly>
+        </label>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+          <label>Fair Quote Cap
+            <input value="ZMW 450.00 (Standardised)" readonly style="font-weight:700">
+          </label>
+          <label>Green Token Discount
+            <input value="-ZMW 25.00 (50 Tokens Applied)" readonly style="color:var(--g2);font-weight:700">
+          </label>
+        </div>
+
+        <label>Net Cost Payable upon Delivery
+          <input value="ZMW 425.00 (Student saves ZMW 2,200 vs buying new)" readonly style="font-size:1.15rem;font-weight:900;color:var(--g);background:#eef6f1;border-color:var(--g2)">
+        </label>
+
+        <button type="submit" class="btn pri blk" id="btn-repair" style="margin-top:.8rem;font-size:1.05rem">
+          <i class="fa-solid fa-paper-plane"></i> Confirm &amp; Book Repair Order
+        </button>
+      </form>
+
+      <div id="repair-result" class="card" style="display:none">
+        <h3 style="margin-top:0"><i class="fa-solid fa-circle-nodes" style="color:var(--g)"></i> Circular Repair Lifecycle</h3>
+
+        <div class="step-list">
+          <div class="step-item" id="rstep-1">
+            <div class="step-num" id="sbadge-1">1</div>
+            <div>
+              <b>1. Free Campus Student Collection</b>
+              <p class="meta" style="margin:.2rem 0 0">Runner dispatched to Hall 3 dorm; logged into tracking system.</p>
+            </div>
+          </div>
+          <div class="step-item" id="rstep-2">
+            <div class="step-num" id="sbadge-2">2</div>
+            <div>
+              <b>2. Techback Fair Quote Review</b>
+              <p class="meta" style="margin:.2rem 0 0">Admin locks price at <b>ZMW 450.00</b> (stops student overcharging).</p>
+            </div>
+          </div>
+          <div class="step-item" id="rstep-3">
+            <div class="step-num" id="sbadge-3">3</div>
+            <div>
+              <b>3. Green Token Discount Applied</b>
+              <p class="meta" style="margin:.2rem 0 0">Student redeems 50 recycling tokens &rarr; <b>ZMW 25.00 discount</b> applied.</p>
+            </div>
+          </div>
+          <div class="step-item" id="rstep-4">
+            <div class="step-num" id="sbadge-4">4</div>
+            <div>
+              <b>4. Vetted Partner Repair &amp; Safe Return</b>
+              <p class="meta" style="margin:.2rem 0 0">Donor screen installed under data-privacy warranty; returned good as new.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-weight:700;color:var(--g);margin-bottom:.3rem">
+          <i class="fa-solid fa-leaf"></i> Environmental Scorecard
+        </div>
+        <div class="scorecard-grid">
+          <div class="scorecard-item"><div class="scorecard-val">45.0 kg</div><div class="scorecard-lbl">CO₂ Saved vs Buying New</div></div>
+          <div class="scorecard-item"><div class="scorecard-val">+2.5 Yrs</div><div class="scorecard-lbl">Device Lifespan Extended</div></div>
+          <div class="scorecard-item"><div class="scorecard-val">ZMW 2,200</div><div class="scorecard-lbl">Student Cash Saved</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: E-WASTE HAND-IN ==================== -->
+    <div id="pane-recycle" class="tab-pane">
+      <form class="card" id="form-recycle" onsubmit="event.preventDefault(); submitRecycle();">
+        <h3 style="margin-top:0"><i class="fa-solid fa-recycle" style="color:var(--g)"></i> E-Waste Hand-in &amp; Token Claim</h3>
+
+        <div class="media-card">
+          <img src="images/handin.jfif" alt="E-waste Scrap 1" class="media-thumb">
+          <img src="images/hand%20in1.jfif" alt="E-waste Scrap 2" class="media-thumb">
+          <img src="images/handin%20(2).jfif" alt="E-waste Scrap 3" class="media-thumb">
+          <div style="flex:1;min-width:200px">
+            <div class="approved-tag">
+              <i class="fa-solid fa-circle-check"></i> Image approved and loaded
+            </div>
+            <div style="font-size:.85rem;font-weight:700;color:var(--tx)">E-Waste Scrap Intake Photos</div>
+            <div class="meta" style="font-size:.76rem;margin-top:.15rem">Dead batteries &amp; cracked screen scrap queued for safe quarantine</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+          <label>Contributor Name
+            <input value="Frank Chileshe (UNZA Campus)" readonly>
+          </label>
+          <label>Contact Phone
+            <input value="097 768 4056" readonly>
+          </label>
+        </div>
+
+        <label>E-Waste Category
+          <input value="Hazardous Scrap: Swollen Lithium Batteries &amp; Shattered Displays" readonly>
+        </label>
+
+        <label>Inventory Item Count / Weight
+          <input value="3 Swollen Li-ion Phone Batteries + 2 Shattered Screen Modules (1.35 kg)" readonly>
+        </label>
+
+        <label>Drop-off Location
+          <input value="UNZA GreenCode E-Waste Drop-Off Kiosk #1" readonly>
+        </label>
+
+        <label>Green Discount Tokens to Claim
+          <input value="+60 Green Discount Tokens (Value: ZMW 30.00)" readonly style="font-size:1.15rem;font-weight:900;color:var(--g);background:#eef6f1;border-color:var(--g2)">
+        </label>
+
+        <button type="submit" class="btn pri blk" id="btn-recycle" style="margin-top:.8rem;font-size:1.05rem">
+          <i class="fa-solid fa-coins"></i> Confirm Hand-in &amp; Claim Tokens
+        </button>
+      </form>
+
+      <div id="recycle-result" class="card" style="display:none;text-align:center">
+        <div class="meta" style="font-size:.85rem;margin-bottom:.3rem">Updated Green Token Balance</div>
+        <div style="font-size:2.8rem;font-weight:900;color:var(--g);margin:.2rem 0">
+          <span id="token-counter">0</span> <i class="fa-solid fa-coins" style="color:#f5c518"></i>
+        </div>
+        <p class="meta" style="margin:0 0 1rem">Spending Value: <b id="token-val" style="color:var(--g)">ZMW 0.00</b> (Ready for next repair discount)</p>
+
+        <div style="background:#ecfdf5;border:1px solid #86efac;border-radius:8px;padding:.75rem;margin-bottom:1rem">
+          <i class="fa-solid fa-circle-check" style="color:#10b981;font-size:1.3rem"></i>
+          <b>100% Toxic Heavy Metals Quarantined from Lusaka Groundwater</b>
+        </div>
+
+        <div style="text-align:left;font-weight:700;color:var(--g);margin-bottom:.3rem">
+          <i class="fa-solid fa-leaf"></i> Urban Mining &amp; Circular Impact
+        </div>
+        <div class="scorecard-grid">
+          <div class="scorecard-item"><div class="scorecard-val">100%</div><div class="scorecard-lbl">Zero Dumpsite Fire Emissions</div></div>
+          <div class="scorecard-item"><div class="scorecard-val">14 g</div><div class="scorecard-lbl">Cobalt &amp; Copper Reclaimed</div></div>
+          <div class="scorecard-item"><div class="scorecard-val">ZMW 30.00</div><div class="scorecard-lbl">Circular Retention Credit Created</div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/demo.js"></script>
+</body>
+</html>

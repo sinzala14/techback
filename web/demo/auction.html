@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TechBack Demo - Auction Payment Checkout</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="alternate icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .scorecard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: .6rem; margin: .8rem 0; }
+    .scorecard-item { background: #fff; border-radius: 8px; padding: .65rem .75rem; border: 1px solid var(--bei); text-align: center; }
+    .scorecard-val { font-size: 1.15rem; font-weight: 800; color: var(--g); }
+    .scorecard-lbl { font-size: .72rem; color: var(--mu); margin-top: .2rem; line-height: 1.2; }
+    .media-card {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid var(--bei);
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .media-thumb {
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1.5px solid var(--bei);
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      transition: transform .2s ease;
+    }
+    .media-thumb:hover { transform: scale(1.03); }
+    @media(max-width: 500px) {
+      .media-thumb { width: 100%; height: 220px; }
+    }
+    .approved-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .76rem;
+      font-weight: 700;
+      color: #15803d;
+      background: #dcfce7;
+      border: 1px solid #bbf7d0;
+      padding: .2rem .55rem;
+      border-radius: 20px;
+      margin-bottom: .35rem;
+    }
+  </style>
+</head>
+<body>
+  <header id="top">
+    <div class="bar">
+      <a class="brand" href="../index.html"><i class="fa-solid fa-recycle"></i> Techback</a>
+      <nav aria-label="Main">
+        <a href="market.html"><i class="fa-solid fa-store"></i><span>Market</span></a>
+        <a href="auction.html" class="on"><i class="fa-solid fa-gavel"></i><span>Auction</span></a>
+        <a href="index.html" class="prim"><i class="fa-solid fa-leaf"></i><span>Eco</span></a>
+        <a href="repair.html"><i class="fa-solid fa-screwdriver-wrench"></i><span>Repair</span></a>
+        <a href="recycle.html"><i class="fa-solid fa-recycle"></i><span>E-Waste</span></a>
+      </nav>
+      <div class="tools">
+        <a class="ib" href="../index.html" title="Back to Main Website" aria-label="Home" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);font-size:.95rem"><i class="fa-solid fa-house"></i></a>
+        <a class="credit-pill" href="market.html" title="Wallet"><i class="fa-solid fa-coins"></i><span>96 Tokens</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="view">
+    <h1><i class="fa-solid fa-gavel" style="color:var(--g)"></i> Auction Winner Checkout</h1>
+
+    <form class="card" id="form-auction" onsubmit="event.preventDefault(); submitAuction();">
+      <h3 style="margin-top:0">Order Summary</h3>
+
+      <div class="media-card">
+        <img src="images/auction.jfif" alt="Auction Phone" class="media-thumb">
+        <img src="images/auction%20pc.jfif" alt="Auction Part" class="media-thumb">
+        <div style="flex:1;min-width:200px">
+          <div class="approved-tag">
+            <i class="fa-solid fa-circle-check"></i> Image approved and loaded
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--tx)">Verified Donor Part &amp; Device Photos</div>
+          <div class="meta" style="font-size:.76rem;margin-top:.15rem">Physical inspection passed · 100% Genuine OEM verified</div>
+        </div>
+      </div>
+      
+      <label>Donor Part / Item Title
+        <input value="iPhone 11 OLED Retina Display Assembly (Circular Donor Part)" readonly>
+      </label>
+      
+      <label>Provenance &amp; Quality Audit
+        <input value="Grade A+ Tested Donor Part · Salvaged from scrap chassis #891 · 100% Genuine OEM Touch" readonly>
+      </label>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+        <label>Winning Bid Amount
+          <input value="ZMW 480.00" readonly style="font-weight:700">
+        </label>
+        <label>Green Token Discount (10%)
+          <input value="-ZMW 48.00 (96 Tokens Burned)" readonly style="color:var(--g2);font-weight:700">
+        </label>
+      </div>
+
+      <label>Total Amount Due
+        <input value="ZMW 432.00" readonly style="font-size:1.2rem;font-weight:900;color:var(--g);background:#eef6f1;border-color:var(--g2)">
+      </label>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+        <label>Payment Method
+          <select>
+            <option selected>MTN Mobile Money (+260 97X)</option>
+            <option>Airtel Money (+260 97X)</option>
+            <option>Zamtel Kwacha (+260 95X)</option>
+            <option>Visa / Mastercard</option>
+          </select>
+        </label>
+        <label>Mobile Money Number
+          <input value="097 768 4056">
+        </label>
+      </div>
+
+      <button type="submit" class="btn pri blk" id="btn-pay" style="margin-top:.8rem;font-size:1.05rem">
+        <i class="fa-solid fa-lock"></i> Confirm &amp; Pay ZMW 432.00
+      </button>
+    </form>
+
+    <div id="auc-processing" class="card" style="display:none;text-align:center;padding:1.8rem">
+      <i class="fa-solid fa-spinner fa-spin" style="font-size:2.2rem;color:var(--g)"></i>
+      <h3 style="margin:.8rem 0 .2rem">Processing Mobile Money USSD Gateway...</h3>
+      <p class="meta" style="margin:0">Simulating USSD PIN prompt on 0977684056 &amp; validating Green Tokens ledger...</p>
+    </div>
+
+    <div id="auc-receipt" class="card" style="display:none">
+      <div style="text-align:center;margin-bottom:.9rem">
+        <i class="fa-solid fa-circle-check" style="font-size:2.6rem;color:#10b981"></i>
+        <h2 style="margin:.3rem 0 .2rem;color:var(--g)">Payment Confirmed &amp; Dispatched!</h2>
+        <p class="meta">Transaction Ref: <b>GC-PAY-98231</b> · Instant Mobile Money Transfer</p>
+      </div>
+
+      <div class="card" style="background:#fff;margin-bottom:.9rem;padding:.9rem">
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem">
+          <span>Total Paid by Buyer:</span>
+          <b>ZMW 432.00</b>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem;color:var(--g2)">
+          <span>Tokens Redeemed:</span>
+          <b>96 Tokens (-ZMW 48.00)</b>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem;padding-top:.4rem;border-top:1px dashed var(--bei)">
+          <span><i class="fa-solid fa-money-bill-transfer" style="color:#10b981"></i> Seller Immediate Payout:</span>
+          <b style="color:#10b981">ZMW 410.40</b>
+        </div>
+        <div style="display:flex;justify-content:space-between;color:#0284c7">
+          <span><i class="fa-solid fa-building-columns"></i> Techback 5% Platform Cut:</span>
+          <b>ZMW 21.60</b>
+        </div>
+      </div>
+
+      <div style="font-weight:700;color:var(--g);margin-bottom:.3rem">
+        <i class="fa-solid fa-leaf"></i> Environmental Impact Scorecard
+      </div>
+      <div class="scorecard-grid">
+        <div class="scorecard-item"><div class="scorecard-val">32.4 kg</div><div class="scorecard-lbl">CO₂ Emissions Averted vs New Screen</div></div>
+        <div class="scorecard-item"><div class="scorecard-val">1.2 kg</div><div class="scorecard-lbl">Toxic E-Waste Diverted from Landfill</div></div>
+        <div class="scorecard-item"><div class="scorecard-val">100%</div><div class="scorecard-lbl">Zero Virgin Mining Required</div></div>
+      </div>
+
+      <div class="acts" style="margin-top:1rem">
+        <button type="button" class="btn sec blk" onclick="resetAuction()">Replay Payment</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/demo.js"></script>
+</body>
+</html>

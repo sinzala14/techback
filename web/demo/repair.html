@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TechBack Demo - Book a Campus Repair</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="alternate icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .scorecard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: .6rem; margin: .8rem 0; }
+    .scorecard-item { background: #fff; border-radius: 8px; padding: .65rem .75rem; border: 1px solid var(--bei); text-align: center; }
+    .scorecard-val { font-size: 1.15rem; font-weight: 800; color: var(--g); }
+    .scorecard-lbl { font-size: .72rem; color: var(--mu); margin-top: .2rem; line-height: 1.2; }
+    .step-list { display: flex; flex-direction: column; gap: .6rem; margin: .8rem 0; }
+    .step-item { display: flex; align-items: flex-start; gap: .8rem; padding: .65rem .8rem; border-radius: 8px; background: #fff; border: 1px solid var(--bei); }
+    .step-item.active { border-color: #f59e0b; background: #fffbeb; }
+    .step-item.done { border-color: #10b981; background: #ecfdf5; }
+    .step-num { width: 26px; height: 26px; border-radius: 50%; background: #cbd5e1; color: #475569; display: grid; place-items: center; font-weight: 700; flex-shrink: 0; font-size: .8rem; }
+    .step-item.active .step-num { background: #f59e0b; color: #fff; }
+    .step-item.done .step-num { background: #10b981; color: #fff; }
+    .media-card {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid var(--bei);
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .media-thumb {
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1.5px solid var(--bei);
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      transition: transform .2s ease;
+    }
+    .media-thumb:hover { transform: scale(1.03); }
+    @media(max-width: 500px) {
+      .media-thumb { width: 100%; height: 220px; }
+    }
+    .approved-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .76rem;
+      font-weight: 700;
+      color: #15803d;
+      background: #dcfce7;
+      border: 1px solid #bbf7d0;
+      padding: .2rem .55rem;
+      border-radius: 20px;
+      margin-bottom: .35rem;
+    }
+  </style>
+</head>
+<body>
+  <header id="top">
+    <div class="bar">
+      <a class="brand" href="../index.html"><i class="fa-solid fa-recycle"></i> Techback</a>
+      <nav aria-label="Main">
+        <a href="market.html"><i class="fa-solid fa-store"></i><span>Market</span></a>
+        <a href="auction.html"><i class="fa-solid fa-gavel"></i><span>Auction</span></a>
+        <a href="index.html" class="prim"><i class="fa-solid fa-leaf"></i><span>Eco</span></a>
+        <a href="repair.html" class="on"><i class="fa-solid fa-screwdriver-wrench"></i><span>Repair</span></a>
+        <a href="recycle.html"><i class="fa-solid fa-recycle"></i><span>E-Waste</span></a>
+      </nav>
+      <div class="tools">
+        <a class="ib" href="../index.html" title="Back to Main Website" aria-label="Home" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);font-size:.95rem"><i class="fa-solid fa-house"></i></a>
+        <a class="credit-pill" href="market.html" title="Wallet"><i class="fa-solid fa-coins"></i><span>96 Tokens</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="view">
+    <h1><i class="fa-solid fa-screwdriver-wrench" style="color:var(--g)"></i> Book a Campus Repair</h1>
+
+    <form class="card" id="form-repair" onsubmit="event.preventDefault(); submitRepair();">
+      <h3 style="margin-top:0">Device &amp; Collection Details</h3>
+
+      <div class="media-card">
+        <img src="images/repair.jfif" alt="Repair Item" class="media-thumb">
+        <div style="flex:1;min-width:200px">
+          <div class="approved-tag">
+            <i class="fa-solid fa-circle-check"></i> Image approved and loaded
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--tx)">Intake Device Diagnostic Photo</div>
+          <div class="meta" style="font-size:.76rem;margin-top:.15rem">Cracked display &amp; degraded battery documented for technician</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+        <label>Customer Name
+          <input value="Frank Chileshe (UNZA Student)" readonly>
+        </label>
+        <label>Contact Phone
+          <input value="097 768 4056" readonly>
+        </label>
+      </div>
+
+      <label>Device Model
+        <input value="Samsung Galaxy S21 5G (Phantom Gray, 128GB)" readonly>
+      </label>
+
+      <label>Reported Hardware Issues
+        <input value="Cracked AMOLED display panel &amp; swollen degraded battery" readonly>
+      </label>
+
+      <label>Collection Service
+        <input value="Free Student Runner Collection on Campus (Hall 3, Room 14)" readonly>
+      </label>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+        <label>Fair Quote Cap
+          <input value="ZMW 450.00 (Standardised)" readonly style="font-weight:700">
+        </label>
+        <label>Green Token Discount
+          <input value="-ZMW 25.00 (50 Tokens Applied)" readonly style="color:var(--g2);font-weight:700">
+        </label>
+      </div>
+
+      <label>Net Cost Payable upon Delivery
+        <input value="ZMW 425.00 (Student saves ZMW 2,200 vs buying new)" readonly style="font-size:1.15rem;font-weight:900;color:var(--g);background:#eef6f1;border-color:var(--g2)">
+      </label>
+
+      <button type="submit" class="btn pri blk" id="btn-repair" style="margin-top:.8rem;font-size:1.05rem">
+        <i class="fa-solid fa-paper-plane"></i> Confirm &amp; Book Repair Order
+      </button>
+    </form>
+
+    <div id="repair-result" class="card" style="display:none">
+      <h3 style="margin-top:0"><i class="fa-solid fa-circle-nodes" style="color:var(--g)"></i> Circular Repair Lifecycle</h3>
+
+      <div class="step-list">
+        <div class="step-item" id="rstep-1">
+          <div class="step-num" id="sbadge-1">1</div>
+          <div>
+            <b>1. Free Campus Student Collection</b>
+            <p class="meta" style="margin:.2rem 0 0">Runner dispatched to Hall 3 dorm; logged into tracking system.</p>
+          </div>
+        </div>
+        <div class="step-item" id="rstep-2">
+          <div class="step-num" id="sbadge-2">2</div>
+          <div>
+            <b>2. Techback Fair Quote Review</b>
+            <p class="meta" style="margin:.2rem 0 0">Admin locks price at <b>ZMW 450.00</b> (stops student overcharging).</p>
+          </div>
+        </div>
+        <div class="step-item" id="rstep-3">
+          <div class="step-num" id="sbadge-3">3</div>
+          <div>
+            <b>3. Green Token Discount Applied</b>
+            <p class="meta" style="margin:.2rem 0 0">Student redeems 50 recycling tokens &rarr; <b>ZMW 25.00 discount</b> applied.</p>
+          </div>
+        </div>
+        <div class="step-item" id="rstep-4">
+          <div class="step-num" id="sbadge-4">4</div>
+          <div>
+            <b>4. Vetted Partner Repair &amp; Safe Return</b>
+            <p class="meta" style="margin:.2rem 0 0">Donor screen installed under data-privacy warranty; returned good as new.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-weight:700;color:var(--g);margin-bottom:.3rem">
+        <i class="fa-solid fa-leaf"></i> Environmental Scorecard
+      </div>
+      <div class="scorecard-grid">
+        <div class="scorecard-item"><div class="scorecard-val">45.0 kg</div><div class="scorecard-lbl">CO₂ Saved vs Buying New</div></div>
+        <div class="scorecard-item"><div class="scorecard-val">+2.5 Yrs</div><div class="scorecard-lbl">Device Lifespan Extended</div></div>
+        <div class="scorecard-item"><div class="scorecard-val">ZMW 2,200</div><div class="scorecard-lbl">Student Cash Saved</div></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/demo.js"></script>
+</body>
+</html>

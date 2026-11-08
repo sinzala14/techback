@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TechBack Demo - E-Waste Hand-in &amp; Token Claim</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="alternate icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .scorecard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: .6rem; margin: .8rem 0; }
+    .scorecard-item { background: #fff; border-radius: 8px; padding: .65rem .75rem; border: 1px solid var(--bei); text-align: center; }
+    .scorecard-val { font-size: 1.15rem; font-weight: 800; color: var(--g); }
+    .scorecard-lbl { font-size: .72rem; color: var(--mu); margin-top: .2rem; line-height: 1.2; }
+    .token-hero { text-align: center; background: #fff; border: 1px solid var(--bei); border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; }
+    .token-huge { font-size: 2.8rem; font-weight: 900; color: var(--g); line-height: 1; margin: .3rem 0; }
+    .token-huge i { color: #f5c518; }
+    .media-card {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid var(--bei);
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .media-thumb {
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1.5px solid var(--bei);
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      transition: transform .2s ease;
+    }
+    .media-thumb:hover { transform: scale(1.03); }
+    @media(max-width: 500px) {
+      .media-thumb { width: 100%; height: 220px; }
+    }
+    .approved-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .76rem;
+      font-weight: 700;
+      color: #15803d;
+      background: #dcfce7;
+      border: 1px solid #bbf7d0;
+      padding: .2rem .55rem;
+      border-radius: 20px;
+      margin-bottom: .35rem;
+    }
+  </style>
+</head>
+<body>
+  <header id="top">
+    <div class="bar">
+      <a class="brand" href="../index.html"><i class="fa-solid fa-recycle"></i> Techback</a>
+      <nav aria-label="Main">
+        <a href="market.html"><i class="fa-solid fa-store"></i><span>Market</span></a>
+        <a href="auction.html"><i class="fa-solid fa-gavel"></i><span>Auction</span></a>
+        <a href="index.html" class="prim"><i class="fa-solid fa-leaf"></i><span>Eco</span></a>
+        <a href="repair.html"><i class="fa-solid fa-screwdriver-wrench"></i><span>Repair</span></a>
+        <a href="recycle.html" class="on"><i class="fa-solid fa-recycle"></i><span>E-Waste</span></a>
+      </nav>
+      <div class="tools">
+        <a class="ib" href="../index.html" title="Back to Main Website" aria-label="Home" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);font-size:.95rem"><i class="fa-solid fa-house"></i></a>
+        <a class="credit-pill" href="market.html" title="Wallet"><i class="fa-solid fa-coins"></i><span>96 Tokens</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="view">
+    <h1><i class="fa-solid fa-recycle" style="color:var(--g)"></i> E-Waste Hand-in &amp; Token Claim</h1>
+
+    <form class="card" id="form-recycle" onsubmit="event.preventDefault(); submitRecycle();">
+      <h3 style="margin-top:0">Intake Details</h3>
+
+      <div class="media-card">
+        <img src="images/handin.jfif" alt="E-waste Scrap 1" class="media-thumb">
+        <img src="images/hand%20in1.jfif" alt="E-waste Scrap 2" class="media-thumb">
+        <img src="images/handin%20(2).jfif" alt="E-waste Scrap 3" class="media-thumb">
+        <div style="flex:1;min-width:200px">
+          <div class="approved-tag">
+            <i class="fa-solid fa-circle-check"></i> Image approved and loaded
+          </div>
+          <div style="font-size:.85rem;font-weight:700;color:var(--tx)">E-Waste Scrap Intake Photos</div>
+          <div class="meta" style="font-size:.76rem;margin-top:.15rem">Dead batteries &amp; cracked screen scrap queued for safe quarantine</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+        <label>Contributor Name
+          <input value="Frank Chileshe (UNZA Campus)" readonly>
+        </label>
+        <label>Contact Phone
+          <input value="097 768 4056" readonly>
+        </label>
+      </div>
+
+      <label>E-Waste Category
+        <input value="Hazardous Scrap: Swollen Lithium Batteries &amp; Shattered Displays" readonly>
+      </label>
+
+      <label>Inventory Item Count / Weight
+        <input value="3 Swollen Li-ion Phone Batteries + 2 Shattered Screen Modules (1.35 kg)" readonly>
+      </label>
+
+      <label>Drop-off Location
+        <input value="UNZA GreenCode E-Waste Drop-Off Kiosk #1" readonly>
+      </label>
+
+      <label>Green Discount Tokens to Claim
+        <input value="+60 Green Discount Tokens (Value: ZMW 30.00)" readonly style="font-size:1.15rem;font-weight:900;color:var(--g);background:#eef6f1;border-color:var(--g2)">
+      </label>
+
+      <button type="submit" class="btn pri blk" id="btn-recycle" style="margin-top:.8rem;font-size:1.05rem">
+        <i class="fa-solid fa-coins"></i> Confirm Hand-in &amp; Claim Tokens
+      </button>
+    </form>
+
+    <div id="recycle-result" class="card" style="display:none;text-align:center">
+      <div class="meta" style="font-size:.85rem;margin-bottom:.3rem">Updated Green Token Balance</div>
+      <div class="token-huge">
+        <span id="token-counter">0</span> <i class="fa-solid fa-coins"></i>
+      </div>
+      <p class="meta" style="margin:0 0 1rem">Spending Value: <b id="token-val" style="color:var(--g)">ZMW 0.00</b> (Ready for next repair discount)</p>
+
+      <div style="background:#ecfdf5;border:1px solid #86efac;border-radius:8px;padding:.75rem;margin-bottom:1rem">
+        <i class="fa-solid fa-circle-check" style="color:#10b981;font-size:1.3rem"></i>
+        <b>100% Toxic Heavy Metals Quarantined from Lusaka Groundwater</b>
+      </div>
+
+      <div style="text-align:left;font-weight:700;color:var(--g);margin-bottom:.3rem">
+        <i class="fa-solid fa-leaf"></i> Urban Mining &amp; Circular Impact
+      </div>
+      <div class="scorecard-grid">
+        <div class="scorecard-item"><div class="scorecard-val">100%</div><div class="scorecard-lbl">Zero Dumpsite Fire Emissions</div></div>
+        <div class="scorecard-item"><div class="scorecard-val">14 g</div><div class="scorecard-lbl">Cobalt &amp; Copper Reclaimed</div></div>
+        <div class="scorecard-item"><div class="scorecard-val">ZMW 30.00</div><div class="scorecard-lbl">Circular Retention Credit Created</div></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/demo.js"></script>
+</body>
+</html>
