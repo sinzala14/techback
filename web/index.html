@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
   :root {
     --bg: #ffffff;
@@ -111,33 +112,184 @@
     .menu-btn, .mobile-nav { display: none !important; }
   }
   @media (max-width: 440px) { .badge { display: none; } }
+  html, body { overflow-x: hidden; }
+  img { max-width: 100%; }
 
-  /* Hero */
-  .hero { padding-block: clamp(2.25rem, 5vw, 4.25rem) clamp(2.5rem, 6vw, 4.5rem); }
-  .hero-grid { display: grid; gap: 2.5rem; align-items: center; }
-  .hero-pills { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
-  .hero-pill { font-size: .78rem; font-weight: 600; padding: .28rem .7rem; border-radius: 999px; background: var(--mist); border: 1px solid var(--line); color: var(--ink); }
-  .hero h1 { font-size: clamp(1.95rem, 3.6vw, 2.95rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.025em; max-width: 20ch; }
+  /* Deliveries / Contact */
+  .delivery-grid { display: grid; gap: 1rem; }
+  .delivery-photo { position: relative; margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--mist); }
+  .delivery-photo img { display: block; width: 100%; height: 260px; object-fit: cover; }
+  .delivery-photo figcaption { position: absolute; left: .75rem; right: .75rem; bottom: .75rem; background: rgba(11,61,46,.88); color: #fff; padding: .6rem .8rem; border-radius: 12px; font-size: .85rem; line-height: 1.35; }
+  .delivery-photo figcaption b { display: block; font-size: .92rem; }
+  .contact-strip { margin-top: 1.25rem; display: grid; gap: .75rem; }
+  .contact-card { display: flex; align-items: center; gap: .85rem; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .85rem 1rem; }
+  .contact-card .icon-tile { width: 44px; height: 44px; border-radius: 12px; font-size: 1.1rem; }
+  .contact-card .num { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: var(--ink); text-decoration: none; display: block; }
+  .contact-card small { color: var(--muted); font-size: .8rem; }
+  .contact-actions { margin-left: auto; display: flex; gap: .4rem; }
+  .contact-actions a { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; text-decoration: none; font-size: 1rem; }
+  .contact-actions .call { background: var(--green-soft); color: var(--green); }
+  .contact-actions .wa { background: #25d366; color: #fff; }
+  @media (min-width: 720px) {
+    .delivery-grid, .contact-strip { grid-template-columns: repeat(2, 1fr); }
+    .delivery-photo img { height: 340px; }
+  }
+
+  /* Mobile polish */
+  @media (max-width: 600px) {
+    .wrap { width: calc(100% - 2rem); }
+    .bar { min-height: 62px; }
+    .brand { gap: .5rem; }
+    .brand-logo-img { height: 40px; }
+    .brand-sub { font-size: .6rem; letter-spacing: .06em; }
+    .section { padding-block: 2.75rem; }
+    .card { padding: 1.25rem; }
+    .hero h1 { font-size: 1.7rem; }
+    .hero-actions .btn { flex: 1 1 100%; }
+    .proto-card { padding: 1.1rem; }
+    .proto-cta { width: 100%; justify-content: center; }
+    .dual-grid { grid-template-columns: 1fr !important; }
+    .division-top { flex-wrap: wrap; }
+    .division-card h3 { font-size: 1.3rem; }
+    .quote { font-size: 1.3rem; }
+    .compare-box div { flex-direction: column; gap: .15rem; }
+    .ecard-showcase-panel { padding: 1.25rem; }
+    .platform-item { grid-template-columns: 1fr; }
+    .closing-foot .btn { width: 100%; }
+    .footer-parent > div { width: 100%; }
+  }
+
+  /* Hero Section With Real Background Image & Slightly Visible Green Tint */
+  .hero {
+    position: relative;
+    padding-block: clamp(3.25rem, 6vw, 5.5rem) clamp(3.5rem, 6.5vw, 6rem);
+    background:
+      linear-gradient(180deg, rgba(15, 23, 42, 0.38) 0%, rgba(7, 45, 32, 0.25) 50%, rgba(10, 18, 16, 0.52) 100%),
+      url("images/hero-bg.jpg") center/cover no-repeat;
+    color: #ffffff;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 85% 15%, rgba(127, 227, 184, 0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid { position: relative; z-index: 2; display: grid; gap: 2.5rem; align-items: center; }
+  .hero h1 { font-size: clamp(2.1rem, 3.8vw, 3.1rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.025em; max-width: 20ch; color: #ffffff !important; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
   .hero-tagline {
     margin-top: 1rem;
     font-family: var(--display);
-    font-size: clamp(1.02rem, 1.6vw, 1.18rem);
-    font-weight: 600;
-    color: var(--green);
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    font-weight: 700;
+    color: #7fe3b8 !important;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.4);
   }
-  .hero .lead { margin-top: .85rem; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.35rem; }
-  .hero-note { margin-top: 1.15rem; font-size: .88rem; color: var(--muted); max-width: 54ch; }
+  .hero .lead {
+    margin-top: .9rem;
+    color: #d8ece2 !important;
+    font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+    line-height: 1.65;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .hero .lead b { color: #ffffff !important; font-weight: 700; }
+  .by-exchange {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    margin-bottom: 1.1rem;
+    padding: .4rem 1.05rem .4rem .45rem;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+    font-size: .88rem;
+    color: #e2f4ec !important;
+    max-width: 100%;
+  }
+  .by-exchange img { height: 38px; width: 38px; object-fit: contain; border-radius: 50%; background: #fff; flex: none; }
+  .by-exchange b { color: #7fe3b8 !important; }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.1rem; }
+  .hero-pill {
+    font-size: .78rem;
+    font-weight: 700;
+    padding: .35rem .85rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .hero-note { margin-top: 1.35rem; font-size: .88rem; color: #b1d5c7 !important; max-width: 54ch; line-height: 1.5; }
+
+  /* First Section Action Buttons - Hover Prominently On Top */
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .95rem;
+    margin-top: 1.65rem;
+    position: relative;
+    z-index: 30;
+  }
+  .hero-actions .btn {
+    position: relative;
+    z-index: 10;
+    font-weight: 700;
+    font-size: 1.02rem;
+    padding: .95rem 1.75rem;
+    border-radius: 999px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transition: transform .25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .25s ease, background-color .25s ease, border-color .25s ease;
+  }
+  .hero-actions .btn:hover {
+    transform: translateY(-5px) scale(1.03);
+    z-index: 35;
+  }
+  .hero-actions .btn-primary {
+    background: #0b7a54 !important;
+    color: #ffffff !important;
+    border: 2px solid #7fe3b8 !important;
+    box-shadow: 0 8px 25px rgba(11, 122, 84, 0.55);
+  }
+  .hero-actions .btn-primary:hover {
+    background: #0eae77 !important;
+    border-color: #a7f3d0 !important;
+    box-shadow: 0 18px 40px rgba(14, 174, 119, 0.7);
+    color: #ffffff !important;
+  }
+  .hero-actions .btn-ghost {
+    background: rgba(255, 255, 255, 0.94) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #072a1f !important;
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  }
+  .hero-actions .btn-ghost:hover {
+    background: #ffffff !important;
+    color: #041a13 !important;
+    border-color: #7fe3b8 !important;
+    box-shadow: 0 18px 38px rgba(255, 255, 255, 0.6);
+  }
 
   /* Eye-Catching Working Prototype Card */
   .proto-card {
-    margin-top: 1.6rem;
-    background: linear-gradient(135deg, #0b3d2e 0%, #0b7a54 100%);
-    color: #fff;
+    margin-top: 1.75rem;
+    background: rgba(7, 31, 22, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: #ffffff !important;
     border-radius: 20px;
-    padding: 1.25rem 1.4rem;
-    box-shadow: 0 14px 32px rgba(11, 61, 46, 0.18);
-    border: 1px solid rgba(127, 227, 184, 0.28);
+    padding: 1.35rem 1.5rem;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(127, 227, 184, 0.35);
     display: grid;
     gap: .9rem;
     position: relative;
@@ -145,9 +297,13 @@
     transition: transform .22s ease, box-shadow .22s ease;
   }
   .proto-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 38px rgba(11, 61, 46, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 20px 44px rgba(11, 122, 84, 0.35);
+    border-color: rgba(127, 227, 184, 0.55);
   }
+  .proto-card h3 { color: #ffffff !important; }
+  .proto-card p { color: #d8ece2 !important; }
+  .proto-card p b { color: #ffffff !important; }
   .proto-card-top {
     display: flex;
     align-items: center;
@@ -241,7 +397,15 @@
     color: #fff;
   }
 
-  .hero-visual { background: var(--mist); border: 1px solid var(--line); border-radius: 26px; padding: clamp(.85rem, 2.5vw, 1.35rem); }
+  .hero-visual {
+    background: rgba(7, 31, 22, 0.70);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(127, 227, 184, 0.32);
+    border-radius: 26px;
+    padding: clamp(.85rem, 2.5vw, 1.35rem);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+  }
   .hero-visual svg { display: block; width: 100%; height: auto; }
   @media (min-width: 960px) { .hero-grid { grid-template-columns: 1.05fr .95fr; gap: 3rem; } }
 
@@ -442,15 +606,16 @@
 
   /* Digital e-TechCard Interactive Visual Mockup */
   .ecard-showcase-panel {
-    background: linear-gradient(135deg, #071f16 0%, #0b3d2e 60%, #124d38 100%);
-    color: #fff;
+    background: radial-gradient(120% 90% at 100% 0%, rgba(127,227,184,.22) 0%, transparent 60%),
+                linear-gradient(135deg, #06241b 0%, #0b3d2e 60%, #0e4c3a 100%);
+    color: #ffffff !important;
     border-radius: 28px;
     padding: clamp(1.75rem, 4vw, 2.75rem);
     margin-top: 2rem;
     display: grid;
     gap: 2rem;
-    box-shadow: 0 18px 42px rgba(7, 31, 22, 0.28);
-    border: 1px solid rgba(127, 227, 184, 0.25);
+    box-shadow: 0 20px 48px rgba(7, 31, 22, 0.35);
+    border: 1px solid rgba(127, 227, 184, 0.32);
   }
   @media (min-width: 920px) {
     .ecard-showcase-panel {
@@ -458,80 +623,226 @@
       align-items: center;
     }
   }
-  .ecard-visual {
-    background: linear-gradient(145deg, #17382c 0%, #0d241c 100%);
-    border: 1.5px solid rgba(127, 227, 184, 0.35);
-    border-radius: 20px;
-    padding: 1.4rem;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  .ecard-showcase-panel h3 { color: #ffffff !important; }
+  .ecard-showcase-panel p { color: #cfe6dc !important; }
+  .ecard-showcase-panel b { color: #ffffff !important; font-weight: 700; }
+  .ecard-showcase-panel .check-list li { color: #ffffff !important; }
+  .ecard-showcase-panel .check-list li b { color: #7fe3b8 !important; }
+
+  /* Physical / Digital Card Wrapper */
+  .ecard-wrap {
     display: grid;
-    gap: 1rem;
+    gap: 1.25rem;
+    justify-items: center;
+    width: 100%;
+  }
+  .ecard {
     position: relative;
     overflow: hidden;
+    width: 100%;
+    max-width: 410px;
+    aspect-ratio: 1.586 / 1;
+    padding: 1.25rem 1.4rem;
+    border-radius: 20px;
+    background:
+      radial-gradient(110% 90% at 100% 0%, rgba(127,227,184,.38) 0%, transparent 55%),
+      radial-gradient(90% 90% at 0% 100%, rgba(31,95,214,.30) 0%, transparent 60%),
+      linear-gradient(135deg, #093828 0%, #072a1f 50%, #041a13 100%);
+    color: #ffffff !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 24px 50px -10px rgba(0,0,0,0.65), 0 0 25px rgba(11, 122, 84, 0.3), inset 0 1px 1px rgba(255,255,255,0.3);
+    border: 1.5px solid rgba(127, 227, 184, 0.4);
+    transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .3s ease;
   }
-  .ecard-visual::after {
+  .ecard::before {
     content: "";
     position: absolute;
-    top: -50%;
-    right: -30%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(127, 227, 184, 0.15) 0%, transparent 70%);
+    inset: 0;
     pointer-events: none;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.12) 48%, transparent 60%);
   }
-  .ecard-visual-top {
+  .ecard:hover {
+    transform: translateY(-6px) rotate(-.5deg);
+    box-shadow: 0 30px 60px -10px rgba(0,0,0,0.75), 0 0 35px rgba(127, 227, 184, 0.4);
+  }
+  .ecard * {
+    color: #ffffff !important;
+  }
+  .ecard-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    position: relative;
+    z-index: 2;
+  }
+  .ecard-brand {
+    height: 28px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+  .ecard-status {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #ffffff !important;
+    background: rgba(11, 122, 84, 0.65);
+    border: 1px solid rgba(127, 227, 184, 0.5);
+    padding: .28rem .75rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .ecard-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 3px rgba(74,222,128,.4);
+  }
+  .ecard-mid {
+    justify-content: space-between;
+    margin-block: .25rem;
   }
   .ecard-chip {
-    width: 38px;
-    height: 28px;
-    background: linear-gradient(135deg, #f5c518 0%, #d4a012 100%);
+    width: 42px;
+    height: 32px;
     border-radius: 6px;
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    background:
+      linear-gradient(90deg, transparent 32%, rgba(0,0,0,.25) 33%, rgba(0,0,0,.25) 35%, transparent 36%, transparent 64%, rgba(0,0,0,.25) 65%, rgba(0,0,0,.25) 67%, transparent 68%),
+      linear-gradient(0deg, transparent 46%, rgba(0,0,0,.25) 47%, rgba(0,0,0,.25) 53%, transparent 54%),
+      linear-gradient(135deg, #fce38a 0%, #f39c12 50%, #d48806 100%);
+    box-shadow: inset 0 1px 2px rgba(255,255,255,.8), 0 2px 6px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.4);
   }
-  .ecard-logo-pill {
+  .ecard-type {
     font-family: var(--display);
-    font-size: .85rem;
     font-weight: 800;
-    letter-spacing: .04em;
-    color: #a7f3d0;
+    font-size: .84rem;
+    letter-spacing: .08em;
+    color: #7fe3b8 !important;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+  .ecard-number-wrap {
+    margin-block: .2rem;
+    display: grid;
+    gap: .15rem;
+  }
+  .ecard-num-label {
+    font-size: .62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: #7fe3b8 !important;
+  }
+  .ecard-number {
+    position: relative;
+    font-family: "Courier New", ui-monospace, monospace;
+    font-weight: 800;
+    font-size: clamp(1.15rem, 4.4vw, 1.45rem);
+    letter-spacing: .16em;
+    white-space: nowrap;
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,.7), 0 0 12px rgba(127, 227, 184, 0.45);
+  }
+  .ecard-bottom {
+    align-items: flex-end;
+    margin-top: .35rem;
+  }
+  .ecard-field {
+    display: grid;
+    gap: .15rem;
+    min-width: 0;
+  }
+  .ecard-field-label {
+    font-size: .62rem !important;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #7fe3b8 !important;
+    font-weight: 700;
+  }
+  .ecard-field-val {
+    font-size: .9rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  }
+  .ecard-field-val small {
+    font-size: .74rem;
+    font-weight: 500;
+    color: #cfe6dc !important;
+  }
+  .ecard-qr-box {
+    background: #ffffff;
+    padding: 3px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .ecard-qr {
+    width: 38px;
+    height: 38px;
+    display: block;
+  }
+
+  /* Redesigned Structured Specs Bento Dashboard */
+  .ecard-specs-bento {
+    width: 100%;
+    max-width: 410px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+  }
+  .ecard-spec-item {
+    background: rgba(7, 31, 22, 0.7);
+    border: 1px solid rgba(127, 227, 184, 0.28);
+    border-radius: 12px;
+    padding: .85rem 1rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .ecard-spec-item .spec-head {
     display: flex;
     align-items: center;
     gap: .4rem;
-  }
-  .ecard-number {
-    font-family: "Courier New", monospace;
-    font-size: 1.15rem;
-    letter-spacing: 0.18em;
-    color: #fff;
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #7fe3b8 !important;
     font-weight: 700;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   }
-  .ecard-meta-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: .6rem;
-    font-size: .78rem;
-    color: #cfe6dc;
-    padding-top: .5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  .ecard-spec-item .spec-head i {
+    color: #7fe3b8 !important;
   }
-  .ecard-meta-grid b { color: #fff; display: block; font-size: .84rem; }
-  .ecard-status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: .35rem;
-    background: rgba(74, 222, 128, 0.2);
-    color: #86efac;
-    padding: .2rem .55rem;
-    border-radius: 999px;
-    font-size: .72rem;
+  .ecard-spec-item .spec-val {
+    font-size: .98rem;
     font-weight: 700;
-    width: fit-content;
+    color: #ffffff !important;
+    margin-top: .3rem;
   }
-
+  .ecard-spec-item .grade-tag {
+    background: #0b7a54;
+    color: #ffffff !important;
+    font-size: .74rem;
+    font-weight: 800;
+    padding: .15rem .45rem;
+    border-radius: 6px;
+    margin-right: .2rem;
+  }
   /* Footer Enterprise Bar */
   .footer-parent {
     margin-bottom: .6rem;
@@ -569,6 +880,707 @@
     *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
     .js .reveal { opacity: 1; transform: none; }
   }
+
+  /* -------------------------------------------------------------------------- */
+  /* Apple & BongoHive Inspired 2027 Roadmap, Lifecycle & Team Styles          */
+  /* -------------------------------------------------------------------------- */
+  
+  .roadmap-vision-hero {
+    background: radial-gradient(130% 120% at 90% 0%, rgba(127,227,184,.20) 0%, transparent 60%),
+                linear-gradient(135deg, #072a1f 0%, #0b3d2e 60%, #0e4c3a 100%);
+    border: 1px solid rgba(127, 227, 184, 0.3);
+    border-radius: var(--radius);
+    padding: clamp(1.75rem, 4vw, 3rem);
+    color: #fff;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 20px 48px rgba(7, 31, 22, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .roadmap-vision-hero::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%237fe3b8' fill-opacity='0.04' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .roadmap-vision-hero-inner { position: relative; z-index: 1; }
+  .roadmap-vision-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: rgba(127, 227, 184, 0.18);
+    color: #7fe3b8;
+    border: 1px solid rgba(127, 227, 184, 0.35);
+    padding: .35rem .95rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 1rem;
+  }
+  .roadmap-vision-hero h2 {
+    font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    max-width: 24ch;
+  }
+  .roadmap-vision-statement {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: #d1ece0;
+    line-height: 1.6;
+    max-width: 58ch;
+    margin-bottom: 1.5rem;
+  }
+  .roadmap-objective-bar {
+    display: grid;
+    gap: 1.25rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  @media (min-width: 780px) {
+    .roadmap-objective-bar {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+  .roadmap-obj-item small {
+    display: block;
+    font-size: .74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #7fe3b8;
+    margin-bottom: .3rem;
+  }
+  .roadmap-obj-item p {
+    font-size: .95rem;
+    color: #e2f4ec;
+    line-height: 1.5;
+  }
+
+  /* Segmented Milestone Tab Controller */
+  .milestone-control-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.25rem;
+  }
+  .milestone-tabs {
+    display: inline-flex;
+    background: #eef5f1;
+    padding: .35rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    gap: .35rem;
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: none;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+  }
+  .milestone-tabs::-webkit-scrollbar { display: none; }
+  .milestone-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    padding: .65rem 1.35rem;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    font-family: var(--display);
+    font-size: .88rem;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .milestone-tab:hover {
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.7);
+  }
+  .milestone-tab.active {
+    background: var(--green);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(11, 122, 84, 0.32);
+  }
+  .milestone-tab .badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #7fe3b8;
+    box-shadow: 0 0 0 2px rgba(127, 227, 184, 0.4);
+  }
+  .milestone-tab:not(.active) .badge-dot {
+    background: #94a3b8;
+    box-shadow: none;
+  }
+
+  /* Milestone Panel Cards (Apple Bento Style) */
+  .milestone-panel {
+    display: none;
+    animation: bentoFadeIn .35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .milestone-panel.active {
+    display: block;
+  }
+  @keyframes bentoFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .bento-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.4rem, 3vw, 2rem);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    position: relative;
+    overflow: hidden;
+  }
+  .milestone-grid-layout {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 960px) {
+    .milestone-grid-layout {
+      grid-template-columns: 1.25fr 1fr;
+    }
+  }
+
+  .milestone-hero-banner {
+    background: radial-gradient(120% 120% at 90% 0%, rgba(127,227,184,.15) 0%, transparent 60%), linear-gradient(180deg, #f8fbf9 0%, #fff 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .milestone-hero-banner h3 {
+    font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+    color: var(--ink);
+    margin-top: .6rem;
+    line-height: 1.25;
+  }
+  .milestone-hero-banner p.milestone-sub {
+    font-size: 1.02rem;
+    color: var(--muted);
+    margin-top: .5rem;
+    line-height: 1.5;
+  }
+  .target-market-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    background: #e6f6ee;
+    color: var(--green);
+    border: 1px solid rgba(11, 122, 84, 0.22);
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    font-size: .82rem;
+    font-weight: 700;
+  }
+
+  /* Activity List (Apple Crisp Design) */
+  .activity-list {
+    display: grid;
+    gap: .75rem;
+    margin-top: 1rem;
+  }
+  .activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: .85rem;
+    background: var(--mist);
+    padding: .85rem 1.05rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(219, 230, 224, 0.7);
+    font-size: .94rem;
+    line-height: 1.45;
+    color: var(--ink);
+    transition: transform .2s, border-color .2s;
+  }
+  .activity-item:hover {
+    transform: translateX(3px);
+    border-color: var(--green);
+    background: #fff;
+  }
+  .activity-item .activity-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: .72rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Target Outcomes Stat Bento */
+  .outcome-box {
+    display: grid;
+    gap: 1rem;
+  }
+  .stat-card-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .outcome-stat-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1rem;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .outcome-stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--green);
+    box-shadow: 0 8px 24px rgba(11, 122, 84, 0.1);
+  }
+  .outcome-stat-card .val {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+    color: var(--green);
+    line-height: 1.1;
+  }
+  .outcome-stat-card .lbl {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-top: .4rem;
+  }
+
+  .primary-obj-card {
+    background: #eef7f2;
+    border: 1px solid rgba(11, 122, 84, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+  .primary-obj-card strong {
+    color: var(--green-strong);
+    display: block;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    margin-bottom: .25rem;
+  }
+  .primary-obj-card p {
+    font-size: 1.02rem;
+    color: var(--ink);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  /* Strategic Matrix Table */
+  .matrix-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.03);
+    margin-top: 1.5rem;
+  }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: .95rem;
+  }
+  .matrix-table th {
+    background: #f7faf8;
+    padding: 1.1rem 1.4rem;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--muted);
+    border-bottom: 2px solid var(--line);
+  }
+  .matrix-table td {
+    padding: 1.25rem 1.4rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    vertical-align: middle;
+  }
+  .matrix-table tr:last-child td { border-bottom: none; }
+  .matrix-table tr:hover td { background: #fafdff; }
+  .period-badge {
+    display: inline-block;
+    padding: .3rem .8rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: .82rem;
+    background: #e2f3ea;
+    color: var(--green);
+  }
+
+  /* Execution Principle Banner */
+  .principle-banner {
+    background: linear-gradient(135deg, #093427 0%, #0d4635 100%);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    margin-top: 2.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border: 1px solid rgba(127, 227, 184, 0.28);
+    box-shadow: 0 16px 36px rgba(7, 31, 22, 0.18);
+  }
+  .principle-icon-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(127, 227, 184, 0.18);
+    color: #7fe3b8;
+    display: grid;
+    place-items: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+  }
+  .principle-banner h4 {
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: .35rem;
+  }
+  .principle-banner p {
+    color: #d1e7dc;
+    font-size: .95rem;
+    line-height: 1.5;
+  }
+
+  /* 7-Layer Electronics Lifecycle Explorer */
+  .lifecycle-interactive-container {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 3.5vw, 2.5rem);
+    margin-top: 3.5rem;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.04);
+  }
+  .lifecycle-stages-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+  }
+  .lifecycle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .55rem 1.05rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--mist);
+    font-size: .84rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .lifecycle-btn:hover {
+    background: #fff;
+    border-color: var(--green);
+    color: var(--ink);
+  }
+  .lifecycle-btn.active {
+    background: var(--deep);
+    border-color: var(--deep);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(11, 61, 46, 0.25);
+  }
+  .lifecycle-btn .num-bubble {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.1);
+    display: grid;
+    place-items: center;
+    font-size: .7rem;
+    font-weight: 700;
+  }
+  .lifecycle-btn.active .num-bubble {
+    background: #7fe3b8;
+    color: var(--deep);
+  }
+
+  .lifecycle-display-box {
+    background: linear-gradient(145deg, #0f3d2e 0%, #08261c 100%);
+    border-radius: var(--radius-sm);
+    color: #fff;
+    padding: 1.75rem 2rem;
+    border: 1px solid rgba(127, 227, 184, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .lifecycle-telemetry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 1.25rem;
+  }
+  .device-id-chip {
+    font-family: ui-monospace, monospace;
+    background: rgba(0,0,0,0.3);
+    color: #7fe3b8;
+    padding: .35rem .75rem;
+    border-radius: 6px;
+    font-size: .85rem;
+    border: 1px solid rgba(127, 227, 184, 0.3);
+  }
+  .lifecycle-detail-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .lifecycle-detail-content {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+  .lifecycle-detail-content h4 {
+    font-size: 1.35rem;
+    color: #fff;
+    margin-bottom: .5rem;
+  }
+  .lifecycle-detail-content p {
+    color: #cfe6dc;
+    font-size: .96rem;
+    line-height: 1.55;
+  }
+  .lifecycle-specs-subpanel {
+    background: rgba(0,0,0,0.22);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: grid;
+    gap: .65rem;
+    font-size: .85rem;
+  }
+  .lifecycle-specs-subpanel div {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+  }
+  .lifecycle-specs-subpanel span { color: #9fd8c2; }
+  .lifecycle-specs-subpanel strong { color: #fff; text-align: right; }
+
+  /* -------------------------------------------------------------------------- */
+  /* BongoHive & Apple Inspired Team Section                                   */
+  /* -------------------------------------------------------------------------- */
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 960px) {
+    .team-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .team-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .team-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(11, 122, 84, 0.12);
+    border-color: var(--green);
+  }
+  .team-card-photo-box {
+    position: relative;
+    width: 100%;
+    height: 330px;
+    overflow: hidden;
+    background: #0b2b20;
+  }
+  .team-card-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform .4s ease;
+  }
+  .team-card:hover .team-card-photo-box img {
+    transform: scale(1.04);
+  }
+  .team-card-badge {
+    position: absolute;
+    bottom: .85rem;
+    left: .85rem;
+    background: rgba(11, 61, 46, 0.88);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: .35rem .75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(127, 227, 184, 0.3);
+  }
+  .team-card-body {
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: .5rem;
+  }
+  .team-card-body h3 {
+    font-size: 1.25rem;
+    color: var(--ink);
+  }
+  .team-card-role {
+    font-size: .84rem;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .team-card-bio {
+    font-size: .9rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: .35rem;
+  }
+  .team-card-foot {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .team-social-links {
+    display: flex;
+    gap: .5rem;
+  }
+  .team-social-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--mist);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    text-decoration: none;
+    font-size: .85rem;
+    transition: background .2s, color .2s;
+  }
+  .team-social-btn:hover {
+    background: var(--green);
+    color: #fff;
+  }
+
+  /* Ecosystem Gallery */
+  .ecosystem-gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+  @media (min-width: 680px) {
+    .ecosystem-gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .ecosystem-gallery-grid {
+      grid-template-columns: 1.35fr 1fr;
+    }
+  }
+
+  .gallery-card {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--deep);
+    height: 300px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  }
+  .gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .gallery-card:hover img {
+    transform: scale(1.03);
+  }
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(7, 31, 22, 0.92) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.4rem;
+    color: #fff;
+  }
+  .gallery-overlay span {
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #7fe3b8;
+  }
+  .gallery-overlay h4 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-top: .2rem;
+  }
+  .gallery-overlay p {
+    font-size: .85rem;
+    color: #d1e7dc;
+    margin-top: .25rem;
+  }
+
+  .bongohive-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: .4rem 1rem;
+    border-radius: 999px;
+    font-size: .84rem;
+    font-weight: 600;
+    color: var(--ink);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  }
+  .bongohive-badge-pill i {
+    color: #0b7a54;
+  }
+
 </style>
 </head>
 <body>
@@ -602,17 +1614,16 @@
     <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+    <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 15a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2zM3 15a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z"/><path d="M18 17v1a3 3 0 0 1-3 3h-3"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path stroke="none" fill="currentColor" d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.5.3-.5v-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c.7.3 1.3.5 1.7.6a4.2 4.2 0 0 0 1.9.1 3.2 3.2 0 0 0 2.1-1.5 2.6 2.6 0 0 0 .2-1.5c-.1-.1-.3-.2-.6-.4zM12 21.8a9.9 9.9 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.8 17.9L.1 24l6.3-1.6A11.8 11.8 0 0 0 12 23.8 11.8 11.8 0 0 0 20.4 3.6z"/></symbol>
   </defs>
 </svg>
 
 <header class="site-header">
   <div class="wrap bar">
-    <a class="brand" href="#top" aria-label="TechBack by eXchange Limited">
-      <img src="images/techback-logo-full-color.svg" alt="TechBack Logo" class="brand-logo-img">
-      <div>
-        <span class="sr">TechBack</span>
-        <span class="brand-sub">by eXchange Limited</span>
-      </div>
+    <a class="brand" href="#top" aria-label="TechBack home">
+      <img src="images/techback-logo-full-color.svg" alt="TechBack" class="brand-logo-img">
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#problem">Problem</a>
@@ -621,14 +1632,12 @@
       <a href="#ecard">e-Card</a>
       <a href="#recovery">Recovery</a>
       <a href="#platform">Platform</a>
-      <a href="#market">Model</a>
+      <a href="#roadmap">2027 Roadmap</a>
+      <a href="#team">Team</a>
       <a href="#impact">Impact</a>
+      <a href="#deliveries">Contact</a>
     </nav>
     <div class="bar-end">
-      <a class="btn-header-demo" href="demo/index.html">
-        <svg class="i" style="width:.9rem;height:.9rem;fill:currentColor;stroke:none"><use href="#i-play"/></svg>
-        Demo App
-      </a>
       <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="mobile-nav" aria-label="Toggle menu">
         <svg class="i i-open"><use href="#i-menu"/></svg>
         <svg class="i i-close"><use href="#i-close"/></svg>
@@ -644,8 +1653,10 @@
       <a href="#recovery">Circular Recovery Flow</a>
       <a href="#platform">Technology Platform</a>
       <a href="#market">Target Market &amp; Revenue</a>
+      <a href="#roadmap">2027 Roadmap &amp; Milestones</a>
+      <a href="#team">Team &amp; Ecosystem</a>
       <a href="#impact">Advantage &amp; Impact</a>
-      <a href="demo/index.html" style="color:var(--green);font-weight:700;">▶ View Working Prototype (Eco &amp; Market)</a>
+      <a href="#deliveries">Deliveries &amp; Contact</a>
     </div>
   </nav>
 </header>
@@ -656,8 +1667,11 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
+        <div class="by-exchange">
+          <img src="images/exchange-logo.webp" alt="eXchange Limited logo">
+          <span>A TechBack initiative by <b>eXchange Limited</b></span>
+        </div>
         <div class="hero-pills">
-          <span class="hero-pill">eXchange Limited Initiative</span>
           <span class="hero-pill">Technology Access</span>
           <span class="hero-pill">Save-to-Own Plans</span>
           <span class="hero-pill">Digital e-Card</span>
@@ -747,6 +1761,53 @@
             <text x="-38" y="15" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#4a5a54">Refurbish, Reuse &amp; Parts</text>
           </g>
         </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliveries & Contact -->
+  <section class="section" id="deliveries" style="padding-top:clamp(1rem,3vw,2rem);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow"><svg class="i" style="width:1rem;height:1rem"><use href="#i-truck"/></svg> Real Deliveries • eXchange Limited</span>
+        <h2>Devices delivered by hand, on campus and to your door.</h2>
+        <p class="lead">Every Save-to-Own device and repair is handed over in person by an eXchange Limited agent, with its e-TechCard already registered.</p>
+      </div>
+
+      <div class="delivery-grid">
+        <figure class="delivery-photo">
+          <img src="images/delivery-campus.jpg" alt="eXchange Limited agent handing a TechBack bag to a student on a university campus" loading="lazy">
+          <figcaption><b>Campus handover</b>Delivered straight to students between lectures.</figcaption>
+        </figure>
+        <figure class="delivery-photo">
+          <img src="images/delivery-doorstep.jpg" alt="eXchange Limited delivery agent handing a boxed device to a customer" loading="lazy">
+          <figcaption><b>Doorstep delivery</b>Boxed, inspected and ready to use on arrival.</figcaption>
+        </figure>
+      </div>
+
+      <div class="contact-strip">
+        <div class="contact-card">
+          <span class="icon-tile"><svg class="i" style="width:1.15rem;height:1.15rem"><use href="#i-phone"/></svg></span>
+          <div>
+            <a class="num" href="tel:+260761272640">+260 761 272 640</a>
+            <small>Orders &amp; deliveries</small>
+          </div>
+          <div class="contact-actions">
+            <a class="call" href="tel:+260761272640" aria-label="Call +260 761 272 640"><svg class="i" style="width:1.15rem;height:1.15rem"><use href="#i-phone"/></svg></a>
+            <a class="wa" href="https://wa.me/260761272640" target="_blank" rel="noopener" aria-label="WhatsApp +260 761 272 640"><svg class="i" style="width:1.15rem;height:1.15rem"><use href="#i-whatsapp"/></svg></a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <span class="icon-tile blue"><svg class="i" style="width:1.15rem;height:1.15rem"><use href="#i-headset"/></svg></span>
+          <div>
+            <a class="num" href="tel:+260975994233">+260 975 994 233</a>
+            <small>Repairs &amp; support</small>
+          </div>
+          <div class="contact-actions">
+            <a class="call" href="tel:+260975994233" aria-label="Call +260 975 994 233"><svg class="i" style="width:1.15rem;height:1.15rem"><use href="#i-phone"/></svg></a>
+            <a class="wa" href="https://wa.me/260975994233" target="_blank" rel="noopener" aria-label="WhatsApp +260 975 994 233"><svg class="i" style="width:1.15rem;height:1.15rem"><use href="#i-whatsapp"/></svg></a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -975,55 +2036,73 @@
             <li><svg class="i" style="color:#7fe3b8;"><use href="#i-check"/></svg><span><b>End-of-Life Tracking:</b> Guides device to harvesting or certified e-waste recycling when retired.</span></li>
           </ul>
 
-          <div style="margin-top:1.4rem;">
-            <a class="btn btn-primary" href="demo/index.html" style="background:#7fe3b8; color:#0b3d2e; border:none; font-weight:700;">
-              <svg class="i" style="width:1rem;height:1rem;fill:currentColor;stroke:none"><use href="#i-play"/></svg>
-              See e-Card in Demo App
-            </a>
-          </div>
+
         </div>
 
-        <!-- e-TechCard Visual Representation -->
-        <div class="ecard-visual">
-          <div class="ecard-visual-top">
-            <div class="ecard-logo-pill">
-              <svg class="i" style="width:1.2rem;height:1.2rem;"><use href="#i-refresh"/></svg>
-              e-TechCard
+        <!-- e-TechCard: card-style visual -->
+        <div class="ecard-wrap">
+          <div class="ecard" role="img" aria-label="Official e-TechCard Digital Passport for Acer Aspire 5, ID TB-8942-0194-ZM, Owner Frank C., Verified Active">
+            <!-- Card Top Bar: Logo & Active Live Dot Badge -->
+            <div class="ecard-row">
+              <img src="images/techback-logo-white.svg" alt="TechBack" class="ecard-brand">
+              <span class="ecard-status">
+                <span class="ecard-dot"></span>
+                <span>Active &amp; Verified</span>
+              </span>
             </div>
-            <span class="ecard-status-pill">
-              <i class="fa-solid fa-circle-check"></i> In Service · Active
-            </span>
+
+            <!-- Card Mid: Gold EMV Chip, NFC Contactless Wave & e-TechCard title -->
+            <div class="ecard-row ecard-mid">
+              <div style="display:flex; align-items:center; gap:.75rem;">
+                <span class="ecard-chip" title="EMV Cryptographic Security Chip"></span>
+                <svg class="ecard-nfc" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#7fe3b8" stroke-width="2.2" stroke-linecap="round"><path d="M7 17a5 5 0 0 1 0-10M11 19a8 8 0 0 0 0-14M15 21a11 11 0 0 0 0-18"/></svg>
+              </div>
+              <span class="ecard-type">e-TechCard™ PASSPORT</span>
+            </div>
+
+            <!-- Card ID Number (Bold, Monospaced, Crisp Glowing White) -->
+            <div class="ecard-number-wrap">
+              <span class="ecard-num-label">PASSPORT HARDWARE ID</span>
+              <div class="ecard-number">TB · 8942 · 0194 · ZM</div>
+            </div>
+
+            <!-- Card Bottom Bar: Owner, Device & Scannable QR Code -->
+            <div class="ecard-row ecard-bottom">
+              <div class="ecard-field">
+                <span class="ecard-field-label">VERIFIED CARDHOLDER</span>
+                <b class="ecard-field-val">Frank C. <small>(UNZA CS)</small></b>
+              </div>
+              <div class="ecard-field">
+                <span class="ecard-field-label">REGISTERED HARDWARE</span>
+                <b class="ecard-field-val">Acer Aspire 5 <small>Core i5</small></b>
+              </div>
+              <div class="ecard-qr-box">
+                <svg class="ecard-qr" viewBox="0 0 9 9" aria-hidden="true" shape-rendering="crispEdges">
+                  <rect width="9" height="9" rx=".8" fill="#ffffff"/>
+                  <path fill="#072a1f" fill-rule="evenodd" d="M1 1h3v3H1zM2 2v1h1V2zM5 1h3v3H5zM6 2v1h1V2zM1 5h3v3H1zM2 6v1h1V6zM5 5h1v1H5zM7 5h1v1H7zM6 6h1v1H6zM5 7h1v1H5zM7 7h1v1H7z"/>
+                </svg>
+              </div>
+            </div>
           </div>
 
-          <div class="ecard-chip"></div>
-
-          <div>
-            <div style="font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:#a7f3d0; margin-bottom:3px;">Digital Device UID</div>
-            <div class="ecard-number">TB-8942-0194-ZM</div>
-          </div>
-
-          <div class="ecard-meta-grid">
-            <div>
-              <span>Hardware Model:</span>
-              <b>Acer Aspire 5 FHD Core i5</b>
+          <!-- Structured Specifications Bento Dashboard -->
+          <div class="ecard-specs-bento">
+            <div class="ecard-spec-item">
+              <div class="spec-head"><i class="fa-solid fa-barcode"></i><span>SERIAL / IMEI</span></div>
+              <div class="spec-val">NX-A82914-9218</div>
             </div>
-            <div>
-              <span>Serial / IMEI:</span>
-              <b>NX-A82914-9218</b>
+            <div class="ecard-spec-item">
+              <div class="spec-head"><i class="fa-solid fa-award"></i><span>CONDITION GRADE</span></div>
+              <div class="spec-val"><span class="grade-tag">Grade A+</span> Certified</div>
             </div>
-            <div>
-              <span>Verified Owner:</span>
-              <b>Frank C. (UNZA Student)</b>
+            <div class="ecard-spec-item">
+              <div class="spec-head"><i class="fa-solid fa-battery-three-quarters"></i><span>BATTERY HEALTH</span></div>
+              <div class="spec-val">94% <span style="font-size:.78rem;color:#7fe3b8;font-weight:600;">(52Wh / 55Wh)</span></div>
             </div>
-            <div>
-              <span>Condition Grade:</span>
-              <b>Grade A+ (94% Battery)</b>
+            <div class="ecard-spec-item">
+              <div class="spec-head"><i class="fa-solid fa-shield-halved"></i><span>WARRANTY &amp; ESCROW</span></div>
+              <div class="spec-val">6 Months Active</div>
             </div>
-          </div>
-
-          <div style="display:flex; justify-content:space-between; align-items:center; font-size:.72rem; color:#a7f3d0; padding-top:.4rem; border-top:1px dashed rgba(255,255,255,.15);">
-            <span>eXchange Limited Ecosystem</span>
-            <span>Scan QR for Audit Log</span>
           </div>
         </div>
       </div>
@@ -1310,64 +2389,510 @@
     </div>
   </section>
 
-  <!-- 7. Operational Strategy & Phased Growth (Sections 7 & 11 of Proposal) -->
+    <!-- 7. TECHBACK 2027 COMPANY MILESTONES & GROWTH ROADMAP -->
   <section class="section" id="roadmap">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Sections 7 &amp; 11 • Operational Strategy</span>
-        <h2>Asset-light partnership launch, followed by disciplined expansion.</h2>
-        <p class="lead">Rather than committing heavy upfront capital to physical plants, TechBack launches through a coordinated partner network of existing repair shops, suppliers, and recyclers—scaling infrastructure as demand is proven.</p>
+      <!-- Apple-inspired Executive Vision Banner -->
+      <div class="roadmap-vision-hero">
+        <div class="roadmap-vision-hero-inner">
+          <div class="roadmap-vision-tag">
+            <svg class="i" style="width:1rem;height:1rem;"><use href="#i-flag"/></svg>
+            <span>2027 Strategic Growth Blueprint</span>
+          </div>
+          <h2>TECHBACK 2027 Milestones &amp; Growth Roadmap</h2>
+          <p class="roadmap-vision-statement">
+            <strong>Vision:</strong> To establish TechBack as a trusted electronics lifecycle management platform connecting consumers, repair professionals and institutions.
+          </p>
+          <div class="roadmap-objective-bar">
+            <div class="roadmap-obj-item">
+              <small>2027 Company Objective</small>
+              <p>Establish TechBack as a trusted electronics lifecycle management platform connecting consumers, repair professionals and institutions, beginning with university communities and expanding into institutional partnerships.</p>
+            </div>
+            <div class="roadmap-obj-item">
+              <small>Execution Principle</small>
+              <p>Each milestone must demonstrate measurable progress before the company commits significant resources to the next stage. Growth is driven by customer validation, operational performance, partnerships, and sustainable revenue.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <ol class="steps" id="steps">
-        <li class="step reveal">
-          <div class="step-top"><span class="step-num">Phase 1</span><svg class="i"><use href="#i-list"/></svg></div>
-          <h3>Establishment</h3>
-          <ul>
-            <li>Develop core digital platform</li>
-            <li>Identify &amp; onboard partner repair shops</li>
-            <li>Establish electronics supplier relationships</li>
-            <li>Onboard initial recycling partners</li>
-            <li>Standardise device inspection &amp; grading</li>
-            <li>Set up customer verification &amp; escrow flows</li>
-          </ul>
-        </li>
-        <li class="step reveal">
-          <div class="step-top"><span class="step-num">Phase 2</span><svg class="i"><use href="#i-pulse"/></svg></div>
-          <h3>Market Validation</h3>
-          <ul>
-            <li>Launch device acquisition programmes</li>
-            <li>Pilot flexible student payment plans</li>
-            <li>Test electronics collection &amp; resale demand</li>
-            <li>Secure initial B2B maintenance clients</li>
-            <li>Evaluate unit economics &amp; repayment KPIs</li>
-          </ul>
-        </li>
-        <li class="step reveal">
-          <div class="step-top"><span class="step-num">Phase 3</span><svg class="i"><use href="#i-chart"/></svg></div>
-          <h3>Operational Expansion</h3>
-          <ul>
-            <li>Establish structured collection drop-offs</li>
-            <li>Expand repair &amp; refurbishment partner network</li>
-            <li>Roll out B2B maintenance subscriptions</li>
-            <li>Formalise financing &amp; insurance partnerships</li>
-            <li>Expand marketplace categories &amp; auctions</li>
-          </ul>
-        </li>
-        <li class="step reveal">
-          <div class="step-top"><span class="step-num">Phase 4</span><svg class="i"><use href="#i-refresh"/></svg></div>
-          <h3>Ecosystem Scale</h3>
-          <ul>
-            <li>Deploy advanced automated device diagnostics</li>
-            <li>Scale enterprise IT asset management tools</li>
-            <li>Expand university &amp; institutional partnerships</li>
-            <li>Open dedicated refurbishment hubs where viable</li>
-            <li>Expand across Zambian towns &amp; regional markets</li>
-          </ul>
-        </li>
-      </ol>
+      <!-- Segmented Milestone Controller (Apple-style pill tabs) -->
+      <div class="milestone-control-wrap">
+        <div class="milestone-tabs" role="tablist" aria-label="2027 Milestones">
+          <button class="milestone-tab active" type="button" data-target="pane-m1" onclick="switchMilestone(this)" role="tab" aria-selected="true">
+            <span class="badge-dot"></span>
+            <span>Milestone 1: Jan 2027</span>
+          </button>
+          <button class="milestone-tab" type="button" data-target="pane-m2" onclick="switchMilestone(this)" role="tab" aria-selected="false">
+            <span class="badge-dot"></span>
+            <span>Milestone 2: Feb–Mar 2027</span>
+          </button>
+          <button class="milestone-tab" type="button" data-target="pane-m3" onclick="switchMilestone(this)" role="tab" aria-selected="false">
+            <span class="badge-dot"></span>
+            <span>Milestone 3: Apr 2027+</span>
+          </button>
+          <button class="milestone-tab" type="button" data-target="pane-summary" onclick="switchMilestone(this)" role="tab" aria-selected="false">
+            <span class="badge-dot"></span>
+            <span>Strategic Matrix</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- MILESTONE 1 PANEL -->
+      <div class="milestone-panel active" id="pane-m1" role="tabpanel">
+        <div class="milestone-hero-banner">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.75rem;">
+            <span class="period-badge">January 2027 • University Launch</span>
+            <div class="target-market-badge">
+              <svg class="i" style="width:.9rem;height:.9rem;"><use href="#i-person"/></svg>
+              <span>Target Market: University Students</span>
+            </div>
+          </div>
+          <h3>Device Access While We Fix</h3>
+          <p class="milestone-sub">Launch the TechBack MVP in selected universities, introducing students to an accessible electronics service ecosystem that eliminates academic downtime.</p>
+        </div>
+
+        <div class="milestone-grid-layout">
+          <!-- Key Activities -->
+          <div class="bento-card">
+            <span class="eyebrow">Key Operational Activities</span>
+            <h4 style="font-size:1.25rem; margin-top:.5rem; margin-bottom:1rem;">Campus Launch Implementation</h4>
+            <div class="activity-list">
+              <div class="activity-item">
+                <span class="activity-icon"><i class="fa-solid fa-rocket"></i></span>
+                <div><strong>MVP Launch &amp; Onboarding:</strong> Deploy MVP across target campuses and onboard university students.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon"><i class="fa-solid fa-laptop-medical"></i></span>
+                <div><strong>Device Access While We Fix:</strong> Introduce dedicated temporary loaner devices so coursework continues uninterrupted during repairs.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon"><i class="fa-solid fa-qrcode"></i></span>
+                <div><strong>Device Registration &amp; Identification:</strong> Assign verifiable digital hardware IDs to every student device.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                <div><strong>Reliable Repair Matchmaking:</strong> Direct students to vetted, qualified repair partners with clear upfront pricing.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon"><i class="fa-solid fa-chart-line"></i></span>
+                <div><strong>Feedback &amp; Market Validation:</strong> Continuously collect student satisfaction, repair turnaround, and retention data.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Objective & Outcomes -->
+          <div class="outcome-box">
+            <div class="primary-obj-card">
+              <strong>Primary Objective</strong>
+              <p>Market validation, rapid student user acquisition, and establishing initial brand trust on campus.</p>
+            </div>
+
+            <div class="bento-card" style="padding:1.4rem;">
+              <span class="eyebrow" style="margin-bottom:.75rem;">Milestone 1 Target Outcomes</span>
+              <div class="stat-card-row">
+                <div class="outcome-stat-card">
+                  <span class="val">100+</span>
+                  <span class="lbl">Registered Users</span>
+                </div>
+                <div class="outcome-stat-card">
+                  <span class="val">30+</span>
+                  <span class="lbl">Completed Requests</span>
+                </div>
+                <div class="outcome-stat-card">
+                  <span class="val">5+</span>
+                  <span class="lbl">Repair Partners</span>
+                </div>
+                <div class="outcome-stat-card">
+                  <span class="val">100%</span>
+                  <span class="lbl">Validated Feedback</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MILESTONE 2 PANEL -->
+      <div class="milestone-panel" id="pane-m2" role="tabpanel">
+        <div class="milestone-hero-banner">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.75rem;">
+            <span class="period-badge" style="background:#fef3c7; color:#b45309;">February – March 2027 • Supply Network</span>
+            <div class="target-market-badge" style="background:#fef3c7; color:#b45309; border-color:rgba(180,83,9,0.25);">
+              <svg class="i" style="width:.9rem;height:.9rem;"><use href="#i-gear"/></svg>
+              <span>Target Market: Independent Repair Shops &amp; Technicians</span>
+            </div>
+          </div>
+          <h3>Repair Shop Integration</h3>
+          <p class="milestone-sub">Expand the TechBack ecosystem by onboarding professional repair service providers, standardising diagnostic benchmarks, and launching E-TechCard membership.</p>
+        </div>
+
+        <div class="milestone-grid-layout">
+          <!-- Key Activities -->
+          <div class="bento-card">
+            <span class="eyebrow" style="background:#fef3c7; color:#b45309;">Key Operational Activities</span>
+            <h4 style="font-size:1.25rem; margin-top:.5rem; margin-bottom:1rem;">Supply Side &amp; Technician Integration</h4>
+            <div class="activity-list">
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#b45309;"><i class="fa-solid fa-certificate"></i></span>
+                <div><strong>Verified Technician Onboarding:</strong> Vet and onboard independent repair shops meeting strict quality and tool standards.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#b45309;"><i class="fa-solid fa-store"></i></span>
+                <div><strong>Service Profiles &amp; Listings:</strong> Introduce public technician profiles, diagnostic menus, and transparent rating systems.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#b45309;"><i class="fa-solid fa-handshake"></i></span>
+                <div><strong>Customer Referral Partnerships:</strong> Channel recurring university and retail demand directly to partner workshops.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#b45309;"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                <div><strong>Repair Tracking &amp; History:</strong> Implement end-to-end digital work orders, parts verification, and status alerts.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#b45309;"><i class="fa-solid fa-id-card"></i></span>
+                <div><strong>E-TechCard Launch &amp; Perks:</strong> Roll out membership cards offering exclusive repair discounts and free periodic device inspections.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Objective & Outcomes -->
+          <div class="outcome-box">
+            <div class="primary-obj-card" style="background:#fffbeb; border-color:rgba(180,83,9,0.25);">
+              <strong style="color:#b45309;">Primary Objective</strong>
+              <p>Build a reliable, high-trust repair network and strengthen the supply side of the circular marketplace.</p>
+            </div>
+
+            <div class="bento-card" style="padding:1.4rem;">
+              <span class="eyebrow" style="margin-bottom:.75rem; background:#fef3c7; color:#b45309;">Milestone 2 Target Outcomes</span>
+              <div class="stat-card-row">
+                <div class="outcome-stat-card">
+                  <span class="val" style="color:#b45309;">10–15</span>
+                  <span class="lbl">Active Repair Partners</span>
+                </div>
+                <div class="outcome-stat-card">
+                  <span class="val" style="color:#b45309;">Daily</span>
+                  <span class="lbl">Referral Inflow</span>
+                </div>
+                <div class="outcome-stat-card">
+                  <span class="val" style="color:#b45309;">100%</span>
+                  <span class="lbl">Repair Tracking</span>
+                </div>
+                <div class="outcome-stat-card">
+                  <span class="val" style="color:#b45309;">High</span>
+                  <span class="lbl">Customer Retention</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MILESTONE 3 PANEL -->
+      <div class="milestone-panel" id="pane-m3" role="tabpanel">
+        <div class="milestone-hero-banner">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.75rem;">
+            <span class="period-badge" style="background:#e0f2fe; color:#0369a1;">April 2027 Onwards • Institutional Scale</span>
+            <div class="target-market-badge" style="background:#e0f2fe; color:#0369a1; border-color:rgba(3,105,161,0.25);">
+              <svg class="i" style="width:.9rem;height:.9rem;"><use href="#i-building"/></svg>
+              <span>Target: Universities, Schools, Corporates, NGOs &amp; Government</span>
+            </div>
+          </div>
+          <h3>Institutional Partnerships</h3>
+          <p class="milestone-sub">Position TechBack as the premier electronics lifecycle management partner for organisations managing fleets of computing equipment and enterprise IT assets.</p>
+        </div>
+
+        <div class="milestone-grid-layout">
+          <!-- Key Activities -->
+          <div class="bento-card">
+            <span class="eyebrow" style="background:#e0f2fe; color:#0369a1;">Key Operational Activities</span>
+            <h4 style="font-size:1.25rem; margin-top:.5rem; margin-bottom:1rem;">Institutional Fleet Management</h4>
+            <div class="activity-list">
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#0284c7;"><i class="fa-solid fa-server"></i></span>
+                <div><strong>Institutional Device Management:</strong> Deploy comprehensive fleet diagnostic and lifecycle management portals.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#0284c7;"><i class="fa-solid fa-boxes-stacked"></i></span>
+                <div><strong>Bulk Device Inspection:</strong> High-volume physical audits, serial tagging, and asset condition grading.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#0284c7;"><i class="fa-solid fa-shield-halved"></i></span>
+                <div><strong>Enterprise SLA Maintenance:</strong> Contractual preventative maintenance, loaner pools, and fast hardware turnaround.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#0284c7;"><i class="fa-solid fa-recycle"></i></span>
+                <div><strong>Recovery &amp; E-Waste Recycling:</strong> Compliant disposal, certified data sanitisation, and component harvesting.</div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-icon" style="background:#0284c7;"><i class="fa-solid fa-file-contract"></i></span>
+                <div><strong>Refurbishment &amp; Procurement:</strong> Institutional device trade-in pipelines and certified refurbished fleet supply.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Objective & Outcomes -->
+          <div class="outcome-box">
+            <div class="primary-obj-card" style="background:#f0f9ff; border-color:rgba(3,105,161,0.25);">
+              <strong style="color:#0369a1;">Primary Objective</strong>
+              <p>Expand from individual consumers into institutional markets and establish predictable, recurring B2B business relationships.</p>
+            </div>
+
+            <div class="bento-card" style="padding:1.4rem;">
+              <span class="eyebrow" style="margin-bottom:.75rem; background:#e0f2fe; color:#0369a1;">Milestone 3 Target Outcomes</span>
+              <div class="stat-card-row">
+                <div class="outcome-stat-card">
+                  <span class="val" style="color:#0284c7;">3+</span>
+                  <span class="lbl">Institutional Pilots</span>
+                </div>
+                <div class="outcome-stat-card">
+                  <span class="val" style="color:#0284c7;">1+</span>
+                  <span class="lbl">Signed Service Agreement</span>
+                </div>
+                <div class="outcome-stat-card">
+                  <span class="val" style="color:#0284c7;">1st</span>
+                  <span class="lbl">Fleet Contract</span>
+                </div>
+                <div class="outcome-stat-card">
+                  <span class="val" style="color:#0284c7;">Multi-Yr</span>
+                  <span class="lbl">Institutional Trust</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUMMARY MATRIX PANEL -->
+      <div class="milestone-panel" id="pane-summary" role="tabpanel">
+        <div class="bento-card">
+          <span class="eyebrow">2027 Strategic Execution Summary</span>
+          <h3 style="font-size:1.4rem; margin-top:.5rem; margin-bottom:.5rem;">Structured Phasing &amp; Market Alignment</h3>
+          <p class="lead" style="font-size:.95rem;">A clear progression from grassroots student validation to technician network integration and enterprise institutional partnerships.</p>
+
+          <div class="matrix-table-wrap">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Period</th>
+                  <th>Target Market</th>
+                  <th>Strategic Objective</th>
+                  <th>Key Milestone Deliverable</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="period-badge">January 2027</span></td>
+                  <td><strong>University Students</strong></td>
+                  <td>Validate demand and acquire users</td>
+                  <td>MVP Launch, Device Access While We Fix, 100+ registered users, 30+ service requests</td>
+                </tr>
+                <tr>
+                  <td><span class="period-badge" style="background:#fef3c7; color:#b45309;">February – March 2027</span></td>
+                  <td><strong>Independent Repair Shops &amp; Technicians</strong></td>
+                  <td>Establish the service network</td>
+                  <td>10–15 vetted repair partners, E-TechCard membership launch, repair tracking system</td>
+                </tr>
+                <tr>
+                  <td><span class="period-badge" style="background:#e0f2fe; color:#0369a1;">April 2027 Onwards</span></td>
+                  <td><strong>Institutions (Universities, Schools, NGOs, Corporates, Government)</strong></td>
+                  <td>Secure institutional partnerships</td>
+                  <td>3+ institutional pilot partnerships, signed service agreement, bulk fleet lifecycle management</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apple-style Callout: Execution Principle -->
+      <div class="principle-banner">
+        <div class="principle-icon-badge">
+          <i class="fa-solid fa-compass-drafting"></i>
+        </div>
+        <div>
+          <h4>Core Execution Principle</h4>
+          <p>Each milestone must demonstrate measurable progress before the company commits significant resources to the next stage. Growth will be driven by customer validation, operational performance, partnerships, and sustainable revenue.</p>
+        </div>
+      </div>
+
+      <!-- LONG-TERM STRATEGIC PRIORITY: Interactive 7-Layer Electronics Lifecycle Explorer -->
+      <div class="lifecycle-interactive-container">
+        <div class="section-head" style="margin-bottom:1.5rem; text-align:center; max-width:760px; margin-inline:auto;">
+          <span class="eyebrow" style="background:#dbece3; color:var(--deep);">Long-Term Strategic Priority</span>
+          <h3 style="font-size:clamp(1.5rem, 2.8vw, 2.2rem);">Comprehensive Electronics Lifecycle Management</h3>
+          <p class="lead" style="font-size:.96rem; margin-inline:auto;">TechBack will progressively develop an immutable device lifecycle management system. Every registered device gradually develops a digital history tracking every stage of its useful life.</p>
+        </div>
+
+        <!-- 7 Interactive Stages Buttons -->
+        <div class="lifecycle-stages-nav" id="lifecycle-nav">
+          <button class="lifecycle-btn active" type="button" data-step="0" onclick="switchLifecycleStep(this, 0)"><span class="num-bubble">1</span> Device Identification</button>
+          <button class="lifecycle-btn" type="button" data-step="1" onclick="switchLifecycleStep(this, 1)"><span class="num-bubble">2</span> Ownership Records</button>
+          <button class="lifecycle-btn" type="button" data-step="2" onclick="switchLifecycleStep(this, 2)"><span class="num-bubble">3</span> Inspection History</button>
+          <button class="lifecycle-btn" type="button" data-step="3" onclick="switchLifecycleStep(this, 3)"><span class="num-bubble">4</span> Repair &amp; Maintenance</button>
+          <button class="lifecycle-btn" type="button" data-step="4" onclick="switchLifecycleStep(this, 4)"><span class="num-bubble">5</span> Components Replaced</button>
+          <button class="lifecycle-btn" type="button" data-step="5" onclick="switchLifecycleStep(this, 5)"><span class="num-bubble">6</span> Service History</button>
+          <button class="lifecycle-btn" type="button" data-step="6" onclick="switchLifecycleStep(this, 6)"><span class="num-bubble">7</span> Resale / Recovery</button>
+        </div>
+
+        <!-- Interactive Telemetry Display -->
+        <div class="lifecycle-display-box" id="lifecycle-display">
+          <div class="lifecycle-telemetry-header">
+            <div>
+              <span style="font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:#7fe3b8; font-weight:700;">Live Device Passport Telemetry</span>
+              <h4 id="lifecycle-title" style="margin:0; font-size:1.25rem;">1. Device Identification &amp; Registration</h4>
+            </div>
+            <div class="device-id-chip" id="lifecycle-tag">TECHBACK-ID: TB-2027-UNZA-0492</div>
+          </div>
+
+          <div class="lifecycle-detail-content">
+            <div>
+              <p id="lifecycle-desc" style="font-size:1rem; line-height:1.6; margin-bottom:1rem;">
+                Every device receives a unique cryptographic hardware ID, linking physical serial numbers, motherboard signatures, and system specifications to a permanent digital record on the TechBack network.
+              </p>
+              <div style="display:inline-flex; align-items:center; gap:.5rem; background:rgba(127,227,184,0.15); padding:.4rem .9rem; border-radius:999px; font-size:.82rem; color:#7fe3b8;">
+                <i class="fa-solid fa-credit-card"></i>
+                <span>Linked directly to customer E-TechCard membership</span>
+              </div>
+            </div>
+
+            <div class="lifecycle-specs-subpanel" id="lifecycle-specs">
+              <div><span>Device Model:</span><strong>ThinkPad T490s / Core i5</strong></div>
+              <div><span>Verified Owner:</span><strong>UNZA Student / CS Dept</strong></div>
+              <div><span>Current Health:</span><strong>94% Battery / Grade A-</strong></div>
+              <div><span>Recorded Status:</span><strong style="color:#7fe3b8;">Registered &amp; Active</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <p style="text-align:center; font-size:.88rem; color:var(--muted); margin-top:1.25rem;">
+          <i class="fa-solid fa-circle-info" style="color:var(--green); margin-right:.35rem;"></i>
+          The <strong>E-TechCard</strong> serves as the anchor of this ecosystem, enabling students, technicians, and institutions to preserve device value across multiple years of productive use.
+        </p>
+      </div>
     </div>
   </section>
+
+  <!-- 8. MEET OUR TEAM & INNOVATION ECOSYSTEM (BongoHive Inspired) -->
+  <section class="section section--mist" id="team">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:clamp(2rem, 4vw, 3rem);">
+        <div style="display:flex; align-items:center; gap:.65rem; flex-wrap:wrap;">
+          <span class="eyebrow">Our Team &amp; Innovation Ecosystem</span>
+          <span class="bongohive-badge-pill"><i class="fa-solid fa-lightbulb"></i> Zambian Tech Ecosystem • Lusaka</span>
+        </div>
+        <h2>Meet the team building Zambia's circular electronics platform.</h2>
+        <p class="lead">Inspired by Zambia's vibrant innovation hubs and the entrepreneurial spirit of BongoHive, our team combines technical expertise, on-campus student presence, and direct repair shop partnerships to solve device downtime.</p>
+      </div>
+
+      <!-- Core Founders & Leadership Grid -->
+      <div class="team-grid">
+        <!-- Joash Muyakwa -->
+        <article class="team-card">
+          <div class="team-card-photo-box">
+            <img src="images/team-joash.jpg" alt="Joash Muyakwa - Co-Founder & Operations" loading="lazy">
+            <span class="team-card-badge">Strategy &amp; Operations</span>
+          </div>
+          <div class="team-card-body">
+            <h3>Joash Muyakwa</h3>
+            <span class="team-card-role">Co-Founder • Operations &amp; Strategy</span>
+            <p class="team-card-bio">Spearheading TechBack's operational roadmap, university campus integrations, and institutional partnerships across Zambian tertiary education institutions.</p>
+            <div class="team-card-foot">
+              <span style="font-size:.78rem; font-weight:600; color:var(--muted);">TechBack Core Team</span>
+              <div class="team-social-links">
+                <a href="tel:+260761272640" class="team-social-btn" title="Call Joash"><i class="fa-solid fa-phone"></i></a>
+                <a href="https://wa.me/260761272640" target="_blank" rel="noopener" class="team-social-btn" title="WhatsApp Joash"><i class="fa-brands fa-whatsapp"></i></a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Kim Sinzala -->
+        <article class="team-card">
+          <div class="team-card-photo-box">
+            <img src="images/team-kim.jpg" alt="Kim Sinzala - Co-Founder & Technology" loading="lazy">
+            <span class="team-card-badge">Technology &amp; Platform</span>
+          </div>
+          <div class="team-card-body">
+            <h3>Kim Sinzala</h3>
+            <span class="team-card-role">Co-Founder • Technical Lead &amp; Software</span>
+            <p class="team-card-bio">Leading digital platform architecture, E-TechCard hardware tracking, device diagnostic records, and the TechBack circular marketplace engines.</p>
+            <div class="team-card-foot">
+              <span style="font-size:.78rem; font-weight:600; color:var(--muted);">TechBack Core Team</span>
+              <div class="team-social-links">
+                <a href="tel:+260975994233" class="team-social-btn" title="Call Kim"><i class="fa-solid fa-phone"></i></a>
+                <a href="https://wa.me/260975994233" target="_blank" rel="noopener" class="team-social-btn" title="WhatsApp Kim"><i class="fa-brands fa-whatsapp"></i></a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Theophelus -->
+        <article class="team-card">
+          <div class="team-card-photo-box">
+            <img src="images/team-theophelus.jpg" alt="Theophelus - Co-Founder & Hardware Network" loading="lazy">
+            <span class="team-card-badge">Repair Network &amp; Hardware</span>
+          </div>
+          <div class="team-card-body">
+            <h3>Theophelus</h3>
+            <span class="team-card-role">Co-Founder • Hardware &amp; Technician Network</span>
+            <p class="team-card-bio">Managing technician relations, repair quality assurance standards, spare parts harvesting pipelines, and diagnostic benchmark protocols.</p>
+            <div class="team-card-foot">
+              <span style="font-size:.78rem; font-weight:600; color:var(--muted);">TechBack Core Team</span>
+              <div class="team-social-links">
+                <a href="tel:+260761272640" class="team-social-btn" title="Contact Theophelus"><i class="fa-solid fa-phone"></i></a>
+                <a href="https://wa.me/260761272640" target="_blank" rel="noopener" class="team-social-btn" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Real Ecosystem & Startup Groundwork Gallery -->
+      <div class="ecosystem-gallery-grid">
+        <!-- Team Pitch Card -->
+        <div class="gallery-card">
+          <img src="images/techback-pitch.jpg" alt="TechBack team pitching at innovation forum" loading="lazy">
+          <div class="gallery-overlay">
+            <span>Ecosystem Validation</span>
+            <h4>Pitching Zambia's Circular Tech Future</h4>
+            <p>Showcasing TechBack's business model and device lifecycle solutions at tech innovation pitch forums.</p>
+          </div>
+        </div>
+
+        <!-- Full Team Photo Card -->
+        <div class="gallery-card">
+          <img src="images/team-group.jpg" alt="TechBack team and campus coordinators" loading="lazy">
+          <div class="gallery-overlay">
+            <span>On-The-Ground Team</span>
+            <h4>United Behind Tech Equity</h4>
+            <p>Our dedicated team of campus coordinators, technicians, and operations specialists in Lusaka.</p>
+          </div>
+        </div>
+
+        <!-- Repair Workshop Card -->
+        <div class="gallery-card">
+          <img src="images/techback-repair.jpg" alt="TechBack repair technician bench and diagnostics" loading="lazy">
+          <div class="gallery-overlay">
+            <span>Milestone 2 In Action</span>
+            <h4>Verified Repair &amp; Diagnostics Lab</h4>
+            <p>Rigorous multi-point inspection, board-level repairs, and component testing conducted with local partners.</p>
+          </div>
+        </div>
+
+        <!-- TechBack Store Card -->
+        <div class="gallery-card">
+          <img src="images/techback-store.jpg" alt="TechBack electronics inventory and store" loading="lazy">
+          <div class="gallery-overlay">
+            <span>Access &amp; Marketplace</span>
+            <h4>TechBack Device &amp; Parts Hub</h4>
+            <p>Providing students and businesses with certified refurbished laptops, accessories, and replacement parts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- 8. Competitive Advantage, Risk Management & Impact (Sections 8, 9 & 10) -->
   <section class="section section--mist" id="impact">
@@ -1513,7 +3038,8 @@
         </div>
       </div>
       <div style="font-size:.85rem; color:var(--muted); display:flex; gap:1.25rem; flex-wrap:wrap;">
-        <span><i class="fa-solid fa-phone" style="color:var(--green);"></i> 0776840567</span>
+        <a href="tel:+260761272640" style="color:inherit;text-decoration:none;"><i class="fa-solid fa-phone" style="color:var(--green);"></i> +260 761 272 640</a>
+        <a href="tel:+260975994233" style="color:inherit;text-decoration:none;"><i class="fa-solid fa-phone" style="color:var(--green);"></i> +260 975 994 233</a>
         <span><i class="fa-solid fa-envelope" style="color:var(--green);"></i> voxreadstudio@gmail.com</span>
       </div>
     </div>
@@ -1547,9 +3073,10 @@
     try { svg.setCurrentTime(2.2); svg.pauseAnimations(); } catch (e) {}
   }
 
-  /* Staggered reveal for the 4 operational phases */
+  /* Staggered reveal for operational phases if present */
   var stepEls = document.querySelectorAll('.step.reveal');
-  if ('IntersectionObserver' in window && !reduce) {
+  var stepsContainer = document.getElementById('steps');
+  if (stepsContainer && stepEls.length && 'IntersectionObserver' in window && !reduce) {
     var stepObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) {
@@ -1561,8 +3088,8 @@
         }
       });
     }, { threshold: 0.15 });
-    stepObs.observe(document.getElementById('steps'));
-  } else {
+    stepObs.observe(stepsContainer);
+  } else if (stepEls.length) {
     stepEls.forEach(function (el) { el.classList.add('in'); });
   }
 
@@ -1639,6 +3166,153 @@
     }, { threshold: 0.55 });
     flowObs.observe(flowEl);
   }
+
+  /* 2027 Milestone Tabs Controller */
+  window.switchMilestone = function (target) {
+    var targetId = typeof target === 'string' ? target : (target.getAttribute('data-target') || target.dataset.target);
+    var milestoneTabs = document.querySelectorAll('.milestone-tab');
+    var milestonePanels = document.querySelectorAll('.milestone-panel');
+
+    milestoneTabs.forEach(function (t) {
+      var isCurrent = (t === target || t.getAttribute('data-target') === targetId);
+      t.classList.toggle('active', isCurrent);
+      t.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+    });
+
+    milestonePanels.forEach(function (p) {
+      p.classList.toggle('active', p.id === targetId);
+    });
+  };
+
+  var milestoneTabs = document.querySelectorAll('.milestone-tab');
+  milestoneTabs.forEach(function (tab) {
+    tab.addEventListener('click', function (e) {
+      if (e) e.preventDefault();
+      window.switchMilestone(tab);
+    });
+  });
+
+  /* 7-Stage Electronics Lifecycle Explorer */
+  var lifecycleData = [
+    {
+      title: "1. Device Identification & Registration",
+      tag: "TECHBACK-ID: TB-2027-UNZA-0492",
+      desc: "Every device receives a unique cryptographic hardware ID, linking physical serial numbers, motherboard signatures, and system specifications to a permanent digital record on the TechBack network.",
+      specs: [
+        { label: "Device Model:", val: "ThinkPad T490s / Core i5" },
+        { label: "Verified Owner:", val: "UNZA Student / CS Dept" },
+        { label: "Current Health:", val: "94% Battery / Grade A-" },
+        { label: "Recorded Status:", val: "Registered & Active" }
+      ]
+    },
+    {
+      title: "2. Ownership & Registration Records",
+      tag: "CUSTODY-RECORD: CR-08412-ZM",
+      desc: "Establishes a verifiable chain of custody throughout the device lifespan. Enables legitimate device registration, anti-theft provenance tracking, and seamless transfer of ownership.",
+      specs: [
+        { label: "First Registered:", val: "14 Jan 2027 (Campus MVP)" },
+        { label: "Custody Type:", val: "Student Individual / Save-to-Own" },
+        { label: "Theft Blacklist:", val: "Clean / Police Verified" },
+        { label: "Transfer Eligibility:", val: "Authorized" }
+      ]
+    },
+    {
+      title: "3. Inspection & Diagnostic History",
+      tag: "DIAGNOSTIC-REPORT: DP-4421-OK",
+      desc: "Every device undergoes a 30-point hardware diagnostic inspection covering display luminance, motherboard thermals, battery cycles, keyboard integrity, and port continuity.",
+      specs: [
+        { label: "Battery Wear Level:", val: "6% (48Wh / 51Wh)" },
+        { label: "Thermal Bench:", val: "62C Peak Stress Load" },
+        { label: "Cosmetic Grade:", val: "Grade A (Zero screen bleeds)" },
+        { label: "Last Inspected:", val: "02 Feb 2027 / Lab 2" }
+      ]
+    },
+    {
+      title: "4. Repair & Maintenance Records",
+      tag: "WORK-ORDER: WO-7789-FIX",
+      desc: "Comprehensive log of all service requests, diagnostic codes, technician signatures, and resolution timeframes. Protects customer warranty and provides transparent service accountability.",
+      specs: [
+        { label: "Issue Logged:", val: "Loose USB-C Charging Port" },
+        { label: "Assigned Partner:", val: "Apex Tech TechBack Lab" },
+        { label: "Temporary Device:", val: "Dell Latitude 7390 Issued" },
+        { label: "Turnaround Time:", val: "28 Hours Total" }
+      ]
+    },
+    {
+      title: "5. Components Replaced",
+      tag: "PARTS-REGISTRY: PR-5509-OEM",
+      desc: "Authentic parts traceability: logs serial numbers and origins of all replacement screens, batteries, keyboards, and RAM modules to guarantee zero counterfeit hardware.",
+      specs: [
+        { label: "Part Installed:", val: "OEM Type-C Power Daughterboard" },
+        { label: "Component Serial:", val: "SN: 8SSB20U54238K1" },
+        { label: "Supplier Origin:", val: "Verified Partner Hub" },
+        { label: "Part Warranty:", val: "6 Months Included" }
+      ]
+    },
+    {
+      title: "6. Continuous Service History",
+      tag: "SERVICE-LOG: SL-1102-MAINT",
+      desc: "Maintains longevity through scheduled preventive servicing: thermal paste renewal, dust purge, fan lubrication, and firmware optimization under the E-TechCard membership.",
+      specs: [
+        { label: "Service Type:", val: "Bi-Annual Campus Tune-Up" },
+        { label: "Thermal Paste:", val: "Arctic MX-4 Applied" },
+        { label: "Operating System:", val: "Fresh Clean Install + Drivers" },
+        { label: "Next Scheduled:", val: "August 2027" }
+      ]
+    },
+    {
+      title: "7. Resale, Recovery or Disposal Records",
+      tag: "CIRCULAR-DISPATCH: CD-9912-REC",
+      desc: "When a user upgrades or completes their studies, the device is wiped to NIST 800-88 data sanitisation standards, evaluated for certified marketplace resale, or responsibly harvested for components.",
+      specs: [
+        { label: "Data Sanitisation:", val: "NIST 800-88 Certified Clean" },
+        { label: "Recovery Valuation:", val: "K 3,200 Trade-In Credit" },
+        { label: "Secondary Route:", val: "TechBack Student Marketplace" },
+        { label: "Zero-Waste Diverted:", val: "1.4 kg E-Waste Prevented" }
+      ]
+    }
+  ];
+
+  window.switchLifecycleStep = function (target, idx) {
+    var stepIdx = (typeof idx === 'number') ? idx : parseInt(target.getAttribute('data-step'), 10);
+    var lifecycleBtns = document.querySelectorAll('.lifecycle-btn');
+    var lifeTitle = document.getElementById('lifecycle-title');
+    var lifeTag = document.getElementById('lifecycle-tag');
+    var lifeDesc = document.getElementById('lifecycle-desc');
+    var lifeSpecs = document.getElementById('lifecycle-specs');
+
+    lifecycleBtns.forEach(function (b, i) {
+      b.classList.toggle('active', i === stepIdx);
+    });
+
+    var item = lifecycleData[stepIdx];
+    if (item && lifeTitle && lifeDesc && lifeSpecs) {
+      lifeTitle.textContent = item.title;
+      lifeTag.textContent = item.tag;
+      lifeDesc.textContent = item.desc;
+      lifeSpecs.innerHTML = '';
+      item.specs.forEach(function (s) {
+        var row = document.createElement('div');
+        var span = document.createElement('span'); span.textContent = s.label;
+        var str = document.createElement('strong'); str.textContent = s.val;
+        if (s.label.indexOf('Status') !== -1 || s.label.indexOf('Valuation') !== -1) {
+          str.style.color = '#7fe3b8';
+        }
+        row.appendChild(span);
+        row.appendChild(str);
+        lifeSpecs.appendChild(row);
+      });
+    }
+  };
+
+  var lifecycleBtns = document.querySelectorAll('.lifecycle-btn');
+  lifecycleBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      if (e) e.preventDefault();
+      window.switchLifecycleStep(btn);
+    });
+  });
+
 })();
 </script>
 </body>
