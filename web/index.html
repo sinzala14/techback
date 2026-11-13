@@ -81,15 +81,23 @@
   .btn-light:hover { background: var(--green-soft); }
 
   /* Header */
-  .site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 68px; }
-  .brand { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; }
-  .brand-mark { width: 34px; height: 34px; }
+  .site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 72px; }
+  .brand { display: inline-flex; align-items: center; gap: .75rem; text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; }
+  .brand-logo-img { height: 42px; width: auto; max-width: 190px; object-fit: contain; display: block; }
+  .brand-sub { font-size: .68rem; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: .08em; display: block; line-height: 1; margin-top: 2px; }
   .nav-links { display: none; gap: 1.4rem; }
   .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: .95rem; transition: color .15s; }
   .nav-links a:hover { color: var(--ink); }
   .bar-end { display: flex; align-items: center; gap: .75rem; }
   .badge { font-size: .78rem; font-weight: 600; color: var(--blue); background: var(--blue-soft); padding: .32rem .8rem; border-radius: 999px; white-space: nowrap; }
+  .btn-header-demo {
+    display: inline-flex; align-items: center; gap: .45rem;
+    background: var(--green); color: #fff; text-decoration: none;
+    font-size: .84rem; font-weight: 700; padding: .42rem .95rem;
+    border-radius: 999px; transition: background .15s, transform .15s;
+  }
+  .btn-header-demo:hover { background: var(--green-strong); transform: translateY(-1px); }
   .menu-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
   .menu-btn .i-close { display: none; }
   .menu-btn[aria-expanded="true"] .i-open { display: none; }
@@ -418,10 +426,124 @@
     .why-intro { position: sticky; top: 100px; }
   }
 
-  /* Risk Management & Impact Cards */
+  /* Dual Grid & e-Card Showcase Styling */
   .dual-grid { display: grid; gap: 1.15rem; }
   @media (min-width: 680px) { .dual-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 980px) { .dual-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .card-highlight-badge {
+    display: inline-flex; align-items: center; gap: .35rem;
+    font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+    padding: .2rem .6rem; border-radius: 999px; width: fit-content; margin-bottom: .4rem;
+  }
+  .card-highlight-badge.green { background: var(--green-soft); color: var(--green); }
+  .card-highlight-badge.blue { background: var(--blue-soft); color: var(--blue); }
+  .card-highlight-badge.amber { background: var(--amber-soft); color: var(--amber); }
+
+  /* Digital e-TechCard Interactive Visual Mockup */
+  .ecard-showcase-panel {
+    background: linear-gradient(135deg, #071f16 0%, #0b3d2e 60%, #124d38 100%);
+    color: #fff;
+    border-radius: 28px;
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    margin-top: 2rem;
+    display: grid;
+    gap: 2rem;
+    box-shadow: 0 18px 42px rgba(7, 31, 22, 0.28);
+    border: 1px solid rgba(127, 227, 184, 0.25);
+  }
+  @media (min-width: 920px) {
+    .ecard-showcase-panel {
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+    }
+  }
+  .ecard-visual {
+    background: linear-gradient(145deg, #17382c 0%, #0d241c 100%);
+    border: 1.5px solid rgba(127, 227, 184, 0.35);
+    border-radius: 20px;
+    padding: 1.4rem;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    display: grid;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .ecard-visual::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(127, 227, 184, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .ecard-visual-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ecard-chip {
+    width: 38px;
+    height: 28px;
+    background: linear-gradient(135deg, #f5c518 0%, #d4a012 100%);
+    border-radius: 6px;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  }
+  .ecard-logo-pill {
+    font-family: var(--display);
+    font-size: .85rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    color: #a7f3d0;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  .ecard-number {
+    font-family: "Courier New", monospace;
+    font-size: 1.15rem;
+    letter-spacing: 0.18em;
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  .ecard-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .6rem;
+    font-size: .78rem;
+    color: #cfe6dc;
+    padding-top: .5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .ecard-meta-grid b { color: #fff; display: block; font-size: .84rem; }
+  .ecard-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    background: rgba(74, 222, 128, 0.2);
+    color: #86efac;
+    padding: .2rem .55rem;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 700;
+    width: fit-content;
+  }
+
+  /* Footer Enterprise Bar */
+  .footer-parent {
+    margin-bottom: .6rem;
+    padding-bottom: .6rem;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75rem;
+  }
+  .footer-parent b { color: var(--ink); font-size: .95rem; }
 
   /* Closing / Vision & Mission */
   .closing { background: var(--deep); color: #fff; padding-block: clamp(3.75rem, 8vw, 6rem); }
@@ -485,24 +607,28 @@
 
 <header class="site-header">
   <div class="wrap bar">
-    <a class="brand" href="#top" aria-label="TechBack home">
-      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
-        <rect width="32" height="32" rx="9" fill="#0B7A54"/>
-        <path d="M8 12h14m-4-4 4 4-4 4M24 20H10m4-4-4 4 4 4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      TechBack
+    <a class="brand" href="#top" aria-label="TechBack by eXchange Limited">
+      <img src="images/techback-logo-full-color.svg" alt="TechBack Logo" class="brand-logo-img">
+      <div>
+        <span class="sr">TechBack</span>
+        <span class="brand-sub">by eXchange Limited</span>
+      </div>
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#problem">Problem</a>
       <a href="#divisions">3 Divisions</a>
-      <a href="#recovery">Recovery Cycle</a>
+      <a href="#save-to-own">Save-to-Own</a>
+      <a href="#ecard">e-Card</a>
+      <a href="#recovery">Recovery</a>
       <a href="#platform">Platform</a>
-      <a href="#market">Market &amp; Model</a>
-      <a href="#roadmap">Roadmap</a>
+      <a href="#market">Model</a>
       <a href="#impact">Impact</a>
     </nav>
     <div class="bar-end">
-      <span class="badge">Business Proposal</span>
+      <a class="btn-header-demo" href="demo/index.html">
+        <svg class="i" style="width:.9rem;height:.9rem;fill:currentColor;stroke:none"><use href="#i-play"/></svg>
+        Demo App
+      </a>
       <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="mobile-nav" aria-label="Toggle menu">
         <svg class="i i-open"><use href="#i-menu"/></svg>
         <svg class="i i-close"><use href="#i-close"/></svg>
@@ -513,12 +639,13 @@
     <div class="wrap">
       <a href="#problem">The Problem</a>
       <a href="#divisions">Three Core Divisions</a>
+      <a href="#save-to-own">Save-to-Own &amp; Access</a>
+      <a href="#ecard">e-TechCard Lifecycle Passport</a>
       <a href="#recovery">Circular Recovery Flow</a>
       <a href="#platform">Technology Platform</a>
       <a href="#market">Target Market &amp; Revenue</a>
-      <a href="#roadmap">Operational Strategy</a>
       <a href="#impact">Advantage &amp; Impact</a>
-      <a href="demo/index.html" style="color:var(--green);font-weight:700;">▶ View Working Prototype</a>
+      <a href="demo/index.html" style="color:var(--green);font-weight:700;">▶ View Working Prototype (Eco &amp; Market)</a>
     </div>
   </nav>
 </header>
@@ -530,28 +657,31 @@
     <div class="wrap hero-grid">
       <div>
         <div class="hero-pills">
+          <span class="hero-pill">eXchange Limited Initiative</span>
           <span class="hero-pill">Technology Access</span>
-          <span class="hero-pill">Electronics Operations</span>
+          <span class="hero-pill">Save-to-Own Plans</span>
+          <span class="hero-pill">Digital e-Card</span>
           <span class="hero-pill">Circular Economy</span>
         </div>
         <h1>Building a sustainable technology access, management &amp; recovery ecosystem.</h1>
         <p class="hero-tagline">“Broken doesn’t mean worthless, and unwanted doesn’t mean useless.”</p>
-        <p class="lead">TechBack is an integrated technology and circular-electronics platform designed to make reliable devices accessible for students and individuals, keep businesses operational with zero downtime, and recover economic value from unused or damaged electronics.</p>
+        <p class="lead">TechBack by <b>eXchange Limited</b> is an integrated technology and circular-electronics platform making reliable computing accessible through <b>Save-to-Own milestone plans</b>, protecting hardware with digital <b>e-TechCard passports</b>, and recovering residual value from unused or damaged devices across Zambia.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#divisions">Explore the 3 Divisions</a>
-          <a class="btn btn-ghost" href="#recovery">Circular Lifecycle</a>
+          <a class="btn btn-primary" href="#save-to-own">Explore Save-to-Own</a>
+          <a class="btn btn-ghost" href="#ecard">See e-Card Passport</a>
+          <a class="btn btn-ghost" href="#divisions">3 Divisions</a>
         </div>
 
         <!-- Eye-catching Working Prototype Showcase Card -->
         <div class="proto-card" role="region" aria-label="Interactive Working Prototype">
           <div class="proto-card-top">
-            <span class="proto-live"><span class="proto-dot"></span> Interactive Simulation Ready</span>
-            <span style="font-size:.76rem;color:#cfe6dc;font-weight:600;">ZMW &amp; Green Tokens Live Demo</span>
+            <span class="proto-live"><span class="proto-dot"></span> Live Prototype Simulator Ready</span>
+            <span style="font-size:.76rem;color:#cfe6dc;font-weight:600;">eXchange Limited Demo v2.0</span>
           </div>
           <div class="proto-card-body">
             <div class="proto-card-text">
               <h3>View Working Prototype</h3>
-              <p>Experience how students and customers build Green Tokens, unlock 0% Save-to-Own device plans, book repairs, and bid on donor parts.</p>
+              <p>Experience how students build Green Tokens, unlock <b>0% Save-to-Own device plans</b>, link digital <b>e-TechCards</b>, book campus repairs, and bid on verified donor parts.</p>
             </div>
             <a class="proto-cta" href="demo/index.html">
               <svg class="i" style="width:1rem;height:1rem;fill:currentColor;stroke:none"><use href="#i-play"/></svg>
@@ -678,13 +808,13 @@
             <h3>Making Technology Affordable</h3>
             <p class="division-sub">For students, individuals &amp; young professionals</p>
           </div>
-          <p>Reduces upfront financial barriers so customers can acquire quality new or refurbished devices matched to their needs and budget through responsible payment models.</p>
+          <p>Reduces upfront financial barriers through responsible <b>Save-to-Own layaway plans</b>, student laptop bundles, and token discounts so customers acquire quality hardware without predatory debt.</p>
           <ul class="check-list">
-            <li><svg class="i"><use href="#i-check"/></svg><span>Flexible device payment &amp; instalment arrangements</span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span><b>Save-to-Own Plans:</b> 0% interest progressive milestone savings</span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span><b>Token Qualification:</b> Trade e-waste/tokens for deposit discounts</span></li>
             <li><svg class="i"><use href="#i-check"/></svg><span>Student-focused laptop acquisition programmes</span></li>
             <li><svg class="i"><use href="#i-check"/></svg><span>Quality-verified, affordable refurbished electronics</span></li>
-            <li><svg class="i"><use href="#i-check"/></svg><span>Device upgrades, trade-ins, and exchanges</span></li>
-            <li><svg class="i"><use href="#i-check"/></svg><span>Access to verified sellers and financing partners</span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>Device upgrades, trade-ins, and verified exchanges</span></li>
           </ul>
         </article>
 
@@ -698,11 +828,11 @@
             <h3>Keeping Businesses Operational</h3>
             <p class="division-sub">For SMEs, offices, schools &amp; institutions</p>
           </div>
-          <p>Replaces unpredictable breakdowns with structured preventive maintenance, rapid diagnostics, lifecycle asset tracking, and partner-backed equipment protection.</p>
+          <p>Replaces unpredictable breakdowns with structured preventive maintenance, digital <b>e-TechCard fleet logs</b>, rapid diagnostics, and partner-backed equipment protection.</p>
           <ul class="check-list">
+            <li><svg class="i"><use href="#i-check"/></svg><span><b>e-TechCard Integration:</b> Full diagnostic &amp; repair history passports</span></li>
             <li><svg class="i"><use href="#i-check"/></svg><span>Scheduled preventive maintenance &amp; servicing</span></li>
             <li><svg class="i"><use href="#i-check"/></svg><span>On-demand computer, phone &amp; peripheral repairs</span></li>
-            <li><svg class="i"><use href="#i-check"/></svg><span>IT inventory, condition &amp; warranty asset management</span></li>
             <li><svg class="i"><use href="#i-check"/></svg><span>Service-level agreements (SLAs) for predictable uptime</span></li>
             <li><svg class="i"><use href="#i-check"/></svg><span>Device protection via authorised insurance partners</span></li>
           </ul>
@@ -783,7 +913,124 @@
     </div>
   </section>
 
-  <!-- 4. Interactive Circular Recovery Walkthrough -->
+  <!-- 4. Save-to-Own Feature Deep Dive -->
+  <section class="section section--mist" id="save-to-own">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">New Feature • Save-to-Own</span>
+        <h2>Overcoming upfront barriers with 0% interest progressive ownership.</h2>
+        <p class="lead">Save-to-Own by <b>eXchange Limited</b> enables students, freelancers, and small businesses to acquire essential laptops and phones through weekly mobile money milestones—turning e-waste into deposit discounts.</p>
+      </div>
+
+      <div class="dual-grid" style="grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));">
+        <article class="card">
+          <div class="card-highlight-badge green"><i class="fa-solid fa-coins"></i> Step 1: Token Build</div>
+          <div class="icon-tile" style="margin-bottom:.75rem;"><svg class="i"><use href="#i-leaf"/></svg></div>
+          <h3>Build Qualification Tokens</h3>
+          <p style="color:var(--muted); font-size:.95rem; margin-top:.4rem;">Hand in damaged screens, dead phone batteries, or old PC scrap at campus drop-off kiosks. Each item credits Green Tokens to your account (e.g. 50–120 tokens qualifies you for a laptop).</p>
+        </article>
+
+        <article class="card">
+          <div class="card-highlight-badge blue"><i class="fa-solid fa-piggy-bank"></i> Step 2: 0% Layaway Lock</div>
+          <div class="icon-tile blue" style="margin-bottom:.75rem;"><svg class="i"><use href="#i-wallet"/></svg></div>
+          <h3>Lock Device with Milestone Savings</h3>
+          <p style="color:var(--muted); font-size:.95rem; margin-top:.4rem;">Select your certified laptop or smartphone, lock the purchase price over 4, 8, or 12 weeks, and redeem Green Tokens as a direct reduction on your initial lock-in deposit (zero interest, zero hidden debt).</p>
+        </article>
+
+        <article class="card">
+          <div class="card-highlight-badge amber"><i class="fa-solid fa-circle-check"></i> Step 3: Verified Handover</div>
+          <div class="icon-tile amber" style="margin-bottom:.75rem;"><svg class="i"><use href="#i-shield-check"/></svg></div>
+          <h3>Take Ownership + e-TechCard</h3>
+          <p style="color:var(--muted); font-size:.95rem; margin-top:.4rem;">Complete milestones via MTN/Airtel/Zamtel Mobile Money. Receive your inspected device with a 6-month warranty and its unique digital <b>e-TechCard</b> passport already registered.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Digital e-TechCard Lifecycle Passport -->
+  <section class="section" id="ecard">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Core Innovation • e-TechCard</span>
+        <h2>The digital lifecycle identity and service passport for every device.</h2>
+        <p class="lead">Developed under <b>eXchange Limited</b>, the <b>e-TechCard</b> is a permanent, cryptographic digital record linked to a physical device’s serial number and QR code—protecting buyers, technicians, and businesses.</p>
+      </div>
+
+      <div class="ecard-showcase-panel">
+        <div>
+          <span class="card-highlight-badge green" style="background:rgba(127,227,184,.15); color:#7fe3b8;">
+            <i class="fa-solid fa-id-card"></i> Cryptographic Device Identity
+          </span>
+          <h3 style="font-size:clamp(1.5rem, 3.2vw, 2.1rem); color:#fff; margin:.6rem 0 .9rem;">
+            Full Provenance, Diagnostic History &amp; Anti-Theft Verification
+          </h3>
+          <p style="color:#d1e7dd; font-size:1.02rem; line-height:1.6; margin-bottom:1.2rem;">
+            Every device sold, serviced, or traded through TechBack is issued a digital <b>e-TechCard</b>. Whether a student is buying a refurbished Dell laptop or a business is tracking 50 office workstations, the card tracks condition grading, authenticated repairs, genuine parts used, and verified ownership transfers.
+          </p>
+
+          <ul class="check-list" style="border-color:rgba(255,255,255,.15); color:#fff;">
+            <li><svg class="i" style="color:#7fe3b8;"><use href="#i-check"/></svg><span><b>Immutable Service History:</b> Logs technician notes, test results, and battery cycle health.</span></li>
+            <li><svg class="i" style="color:#7fe3b8;"><use href="#i-check"/></svg><span><b>Anti-Theft Protection:</b> Proof-of-ownership certificate tied to user NRC/Student ID.</span></li>
+            <li><svg class="i" style="color:#7fe3b8;"><use href="#i-check"/></svg><span><b>Higher Resale Value:</b> Verified provenance commands up to 25% higher resale and trade-in value.</span></li>
+            <li><svg class="i" style="color:#7fe3b8;"><use href="#i-check"/></svg><span><b>End-of-Life Tracking:</b> Guides device to harvesting or certified e-waste recycling when retired.</span></li>
+          </ul>
+
+          <div style="margin-top:1.4rem;">
+            <a class="btn btn-primary" href="demo/index.html" style="background:#7fe3b8; color:#0b3d2e; border:none; font-weight:700;">
+              <svg class="i" style="width:1rem;height:1rem;fill:currentColor;stroke:none"><use href="#i-play"/></svg>
+              See e-Card in Demo App
+            </a>
+          </div>
+        </div>
+
+        <!-- e-TechCard Visual Representation -->
+        <div class="ecard-visual">
+          <div class="ecard-visual-top">
+            <div class="ecard-logo-pill">
+              <svg class="i" style="width:1.2rem;height:1.2rem;"><use href="#i-refresh"/></svg>
+              e-TechCard
+            </div>
+            <span class="ecard-status-pill">
+              <i class="fa-solid fa-circle-check"></i> In Service · Active
+            </span>
+          </div>
+
+          <div class="ecard-chip"></div>
+
+          <div>
+            <div style="font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:#a7f3d0; margin-bottom:3px;">Digital Device UID</div>
+            <div class="ecard-number">TB-8942-0194-ZM</div>
+          </div>
+
+          <div class="ecard-meta-grid">
+            <div>
+              <span>Hardware Model:</span>
+              <b>Acer Aspire 5 FHD Core i5</b>
+            </div>
+            <div>
+              <span>Serial / IMEI:</span>
+              <b>NX-A82914-9218</b>
+            </div>
+            <div>
+              <span>Verified Owner:</span>
+              <b>Frank C. (UNZA Student)</b>
+            </div>
+            <div>
+              <span>Condition Grade:</span>
+              <b>Grade A+ (94% Battery)</b>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:.72rem; color:#a7f3d0; padding-top:.4rem; border-top:1px dashed rgba(255,255,255,.15);">
+            <span>eXchange Limited Ecosystem</span>
+            <span>Scan QR for Audit Log</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Interactive Circular Recovery Walkthrough -->
   <section class="section section--mist" id="recovery">
     <div class="wrap">
       <div class="section-head">
@@ -1256,9 +1503,24 @@
 </main>
 
 <footer class="site-footer">
-  <div class="wrap foot">
-    <p><strong>TechBack Business Proposal</strong> — Building a Sustainable Technology Access, Management and Recovery Ecosystem (Zambia &amp; Beyond).</p>
-    <p>TechBackAccess • TechBackBusiness • TechBackRecovery</p>
+  <div class="wrap">
+    <div class="footer-parent">
+      <div style="display:flex; align-items:center; gap:.75rem;">
+        <img src="images/exchange-logo.webp" alt="eXchange Limited Logo" style="height:32px; width:auto; border-radius:6px; object-fit:contain;">
+        <div>
+          <b style="font-size:1.02rem;">eXchange Limited</b>
+          <span style="font-size:.8rem; color:var(--muted); display:block;">Pioneering Sustainable Technology Access, Management &amp; Recovery in Zambia</span>
+        </div>
+      </div>
+      <div style="font-size:.85rem; color:var(--muted); display:flex; gap:1.25rem; flex-wrap:wrap;">
+        <span><i class="fa-solid fa-phone" style="color:var(--green);"></i> 0776840567</span>
+        <span><i class="fa-solid fa-envelope" style="color:var(--green);"></i> voxreadstudio@gmail.com</span>
+      </div>
+    </div>
+    <div class="foot">
+      <p><strong>TechBack™ by eXchange Limited</strong> — Integrated Circular Electronics, Save-to-Own Financing &amp; Digital e-TechCard Systems (Lusaka, Zambia).</p>
+      <p>TechBackAccess • TechBackBusiness • TechBackRecovery</p>
+    </div>
   </div>
 </footer>
 
